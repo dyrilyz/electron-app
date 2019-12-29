@@ -1,0 +1,35 @@
+
+* {
+  box-sizing: border-box
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+
+  .el-dialog__header {
+    padding: 10px 20px;
+    border-bottom: 1px solid #cfcfcf;
+    user-select: none;
+  }
+
+  .el-dialog__title {
+    font-size: 16px;
+  }
+
+  .el-dialog__body {
+    padding: 10px 20px 0;
+  }
+
+  .el-button--default {
+    &:hover, &:focus, &:active {
+      border-color: #898c93;
+      background-color: #fff;
+      color: #000;
+    }
+  }
+
+}

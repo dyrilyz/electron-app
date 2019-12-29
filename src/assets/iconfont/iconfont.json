@@ -1,0 +1,16 @@
+{
+  "id": "1588406",
+  "name": "electron-app",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10128012",
+      "name": "theme",
+      "font_class": "theme",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    }
+  ]
+}
