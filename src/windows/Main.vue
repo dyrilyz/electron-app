@@ -2,7 +2,9 @@
   <div class="main">
     <app-header/>
     <div>this is main window</div>
-    <div><router-link :to="{name:'setting'}">setting</router-link></div>
+    <div>
+      <router-link :to="{name:'setting'}">setting</router-link>
+    </div>
   </div>
 </template>
 

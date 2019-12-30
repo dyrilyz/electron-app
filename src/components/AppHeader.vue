@@ -2,7 +2,7 @@
   <div class="app-header">
     <div class="content-wrapper">
       <div class="logo">
-        <span>这里是个logo</span>
+        <span class="paopao">这里是个logo</span>
       </div>
       <div class="window-ctrl">
         <div class="app-ctrl">
@@ -10,9 +10,10 @@
           <i class="no-drag btn-margin el-icon-setting"/>
         </div>
         <div class="sys-ctrl">
-          <i class="no-drag btn-margin el-icon-remove-outline" @click="minimize"/>
-          <i class="no-drag btn-margin el-icon-circle-plus-outline" @click="maximize"/>
-          <i class="no-drag btn-margin el-icon-circle-close" @click="close"/>
+          <i class="no-drag btn-margin iconfont iconzuixiaohua2" @click="minimize"/>
+          <i class="no-drag btn-margin iconfont iconzuixiaohua" @click="unmaximize" v-if="isMaximize"/>
+          <i class="no-drag btn-margin iconfont iconquanpingzuidahua" @click="maximize" v-else/>
+          <i class="no-drag btn-margin iconfont iconClose" @click="close"/>
         </div>
       </div>
     </div>
@@ -28,6 +29,11 @@
   export default {
     name: "AppHeader",
     components: {ThemeModal},
+    computed: {
+      isMaximize() {
+        return this.$store.getters.getIsMaximize
+      }
+    },
     data() {
       return {
         themeModalVisible: false
@@ -39,6 +45,9 @@
       },
       minimize() {
         this.$store.commit('minimize')
+      },
+      unmaximize() {
+        this.$store.commit('unmaximize')
       },
       maximize() {
         this.$store.commit('maximize')
@@ -61,11 +70,19 @@
 
 <style scoped lang="scss">
   .app-header {
+    user-select: none;
+    -webkit-app-region: drag;
+
+    .logo {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
     .content-wrapper {
       transition: background-color .5s;
       width: 100%;
       height: 50px;
-      -webkit-app-region: drag;
       display: flex;
       align-items: center;
       justify-content: space-between;

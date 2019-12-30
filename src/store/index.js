@@ -15,10 +15,11 @@ function getWinId() {
   })
 }
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     theme: 'theme-red',
     winId: -1,
+    isMaximize: false,
   },
   getters: {
     getTheme(state) {
@@ -28,6 +29,7 @@ export default new Vuex.Store({
       }
       return state.theme
     },
+    getIsMaximize: state => state.isMaximize
   },
   mutations: {
     setTheme(state, theme) {
@@ -44,9 +46,24 @@ export default new Vuex.Store({
       const id = await getWinId()
       ipcRenderer.send('win-maximize', id)
     },
+    async unmaximize() {
+      const id = await getWinId()
+      ipcRenderer.send('win-unmaximize', id)
+    },
     async close() {
       const id = await getWinId()
       ipcRenderer.send('win-close', id)
     },
+    setMaximize(state, data) {
+      if (state.isMaximize !== data) {
+        state.isMaximize = data
+      }
+    }
   }
 })
+
+ipcRenderer.on('win-maximize', (e, data) => {
+  store.commit('setMaximize', data)
+})
+
+export default store

@@ -19,7 +19,7 @@
 </script>
 
 <style lang="scss">
-  @import "./assets/theme";
-  @import "./assets/global";
+  @import "./assets/style/theme";
+  @import "./assets/style/global";
 </style>
 

@@ -38,6 +38,19 @@ function createWindow(opt, isDidFinishLoadShow = true, windowName = '') {
     }
   })
 
+  let resizeTimeId = null
+  win.on('resize', () => {
+    if (resizeTimeId) {
+      clearTimeout(resizeTimeId)
+    }
+    resizeTimeId = setTimeout(() => {
+      resizeTimeId = null
+      const isMaximized = win.isMaximized()
+      win.webContents.send('win-maximize', isMaximized)
+    }, 100)
+  })
+
+
   return win
 }
 
@@ -107,6 +120,14 @@ ipcMain.on('win-maximize', (e, id) => {
     const win = getShowedWinById(id)
     win && win.maximize()
   }
+})
+
+ipcMain.on('win-unmaximize', (e, id) => {
+  if (id) {
+    const win = getShowedWinById(id)
+    win && win.unmaximize()
+  }
+
 })
 
 ipcMain.on('win-close', (e, id) => {

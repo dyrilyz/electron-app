@@ -1,0 +1,344 @@
+$themeRed: #c62f2f;
+$themeDark: #222225;
+$themeGreen: #5ee4ac;
+$themeOrange: #FF8A43;
+$themeBlue: #27bbff;
+$themePurple: #743ef0;
+
+.theme-red {
+  $mainColor: $themeRed;
+
+  .app-header {
+    background-color: $mainColor;
+
+    .logo{
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .window-ctrl {
+      .sys-ctrl:before {
+        background-color: #a82828;
+      }
+
+      .no-drag {
+        //color: #e29595;
+        color: #eea1a1;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-button--app {
+    $bgColor: $mainColor;
+    $bgHoverColor: #ff3f38;
+
+    color: #fff;
+    border-color: $bgColor;
+    background-color: $bgColor;
+
+    &:hover, &:focus, &:active {
+      color: #fff;
+      border-color: $bgHoverColor;
+      background-color: $bgHoverColor;
+    }
+  }
+
+  .theme-modal {
+    .theme-list-wrapper {
+      .theme-radio {
+        &.active {
+          border-color: $mainColor;
+        }
+
+        .marker {
+          border-bottom-color: $mainColor;
+        }
+      }
+    }
+  }
+
+}
+
+.theme-dark {
+  $mainColor: $themeDark;
+
+  .app-header {
+    background-color: $mainColor;
+
+    .logo{
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .sys-ctrl:before {
+      background-color: #18181a;
+    }
+
+    .window-ctrl {
+      .no-drag {
+        color: #828487;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-button--app {
+    $bgColor: $mainColor;
+    $bgHoverColor: #666;
+
+    color: #fff;
+    border-color: $bgColor;
+    background-color: $bgColor;
+
+    &:hover, &:focus, &:active {
+      color: #fff;
+      border-color: $bgHoverColor;
+      background-color: $bgHoverColor;
+    }
+  }
+
+  .theme-modal {
+    .theme-list-wrapper {
+      .theme-radio {
+        &.active {
+          border-color: $mainColor;
+        }
+
+        .marker {
+          border-bottom-color: $mainColor;
+        }
+      }
+    }
+  }
+}
+
+.theme-green {
+  $mainColor: $themeGreen;
+
+  .app-header {
+    background-color: $mainColor;
+
+    .logo{
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .sys-ctrl:before {
+      background-color: #18181a;
+    }
+
+    .window-ctrl {
+      .no-drag {
+        color: darken($mainColor, 40%);
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-button--app {
+    $bgColor: $mainColor;
+    $bgHoverColor: #666;
+
+    color: #fff;
+    border-color: $bgColor;
+    background-color: $bgColor;
+
+    &:hover, &:focus, &:active {
+      color: #fff;
+      border-color: $bgHoverColor;
+      background-color: $bgHoverColor;
+    }
+  }
+
+  .theme-modal {
+    .theme-list-wrapper {
+      .theme-radio {
+        &.active {
+          border-color: $mainColor;
+        }
+
+        .marker {
+          border-bottom-color: $mainColor;
+        }
+      }
+    }
+  }
+}
+
+.theme-orange {
+  $mainColor: $themeOrange;
+
+  .app-header {
+    background-color: $mainColor;
+
+    .logo{
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .sys-ctrl:before {
+      background-color: #18181a;
+    }
+
+    .window-ctrl {
+      .no-drag {
+        color: darken($mainColor, 40%);
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-button--app {
+    $bgColor: $mainColor;
+    $bgHoverColor: #666;
+
+    color: #fff;
+    border-color: $bgColor;
+    background-color: $bgColor;
+
+    &:hover, &:focus, &:active {
+      color: #fff;
+      border-color: $bgHoverColor;
+      background-color: $bgHoverColor;
+    }
+  }
+
+  .theme-modal {
+    .theme-list-wrapper {
+      .theme-radio {
+        &.active {
+          border-color: $mainColor;
+        }
+
+        .marker {
+          border-bottom-color: $mainColor;
+        }
+      }
+    }
+  }
+}
+
+.theme-blue {
+  $mainColor: $themeBlue;
+
+  .app-header {
+    background-color: $mainColor;
+
+    .logo{
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .sys-ctrl:before {
+      background-color: #18181a;
+    }
+
+    .window-ctrl {
+      .no-drag {
+        color: darken($mainColor, 68%);
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-button--app {
+    $bgColor: $mainColor;
+    $bgHoverColor: #666;
+
+    color: #fff;
+    border-color: $bgColor;
+    background-color: $bgColor;
+
+    &:hover, &:focus, &:active {
+      color: #fff;
+      border-color: $bgHoverColor;
+      background-color: $bgHoverColor;
+    }
+  }
+
+  .theme-modal {
+    .theme-list-wrapper {
+      .theme-radio {
+        &.active {
+          border-color: $mainColor;
+        }
+
+        .marker {
+          border-bottom-color: $mainColor;
+        }
+      }
+    }
+  }
+}
+
+.theme-purple {
+  $mainColor: $themePurple;
+
+  .app-header {
+    background-color: $mainColor;
+
+    .logo{
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .sys-ctrl:before {
+      background-color: #18181a;
+    }
+
+    .window-ctrl {
+      .no-drag {
+        color: darken($mainColor, 40%);
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-button--app {
+    $bgColor: $mainColor;
+    $bgHoverColor: #666;
+
+    color: #fff;
+    border-color: $bgColor;
+    background-color: $bgColor;
+
+    &:hover, &:focus, &:active {
+      color: #fff;
+      border-color: $bgHoverColor;
+      background-color: $bgHoverColor;
+    }
+  }
+
+  .theme-modal {
+    .theme-list-wrapper {
+      .theme-radio {
+        &.active {
+          border-color: $mainColor;
+        }
+
+        .marker {
+          border-bottom-color: $mainColor;
+        }
+      }
+    }
+  }
+}
