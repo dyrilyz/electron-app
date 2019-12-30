@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <app-header/>
-    <div>this is main window</div>
-    <div>
-      <router-link :to="{name:'setting'}">setting</router-link>
+    <div class="app-container">
+      这是主窗口
     </div>
+    <router-view/>
   </div>
 </template>
 
@@ -14,7 +14,7 @@
   export default {
     components: {
       AppHeader,
-    }
+    },
   }
 </script>
 

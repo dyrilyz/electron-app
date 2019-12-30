@@ -1,9 +1,9 @@
+import '@/assets/font/font-face.css'
+import '@/assets/iconfont/iconfont.css'
 import Vue from 'vue'
 import store from '@/store'
 import App from './App.vue'
 import router from './router'
-import '@/assets/font/font-face.css'
-import '@/assets/iconfont/iconfont.css'
 import './plugins/element.js'
 
 Vue.config.productionTip = false

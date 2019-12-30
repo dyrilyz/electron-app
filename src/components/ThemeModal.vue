@@ -10,7 +10,7 @@
                :show-close="false">
       <div class="theme-list-wrapper">
         <div class="theme-block" v-for="theme in themeList" :key="theme.value">
-          <label class="theme-radio" :class="{active: checked===theme.value}" :style="{background: theme.hex}">
+          <label class="theme-radio" :class="radioClassList(theme)">
             <input type="radio" v-model="checked" :value="theme.value"/>
             <span v-text="theme.title"/>
             <i class="marker">
@@ -30,19 +30,27 @@
 <script>
   export default {
     data() {
+      const checked = this.$store.getters.getTheme
       return {
-        checked: '',
+        checked,
         themeList: [
-          {title: '中国红', hex: '#c62f2f', value: 'theme-red'},
-          {title: '炫酷黑', hex: '#222225', value: 'theme-dark'},
-          {title: '清新绿', hex: '#5ee4ac', value: 'theme-green'},
-          {title: '活力橙', hex: '#FF8A43', value: 'theme-orange'},
-          {title: '明亮蓝', hex: '#27bbff', value: 'theme-blue'},
-          {title: '基佬紫', hex: '#743ef0', value: 'theme-purple'},
+          {title: '中国红', value: 'theme-red'},
+          {title: '炫酷黑', value: 'theme-dark'},
+          {title: '清新绿', value: 'theme-green'},
+          {title: '活力橙', value: 'theme-orange'},
+          {title: '明亮蓝', value: 'theme-blue'},
+          {title: '基佬紫', value: 'theme-purple'},
         ]
       }
     },
     methods: {
+      radioClassList(theme) {
+        const arr = [theme.value]
+        if (this.checked === theme.value) {
+          arr.push('active')
+        }
+        return arr
+      },
       handleBtnClick(target) {
         this.$emit(target, this.checked)
       }
@@ -51,6 +59,7 @@
 </script>
 
 <style scoped lang="scss">
+
   .theme-modal {
     .theme-list-wrapper {
       display: flex;

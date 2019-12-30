@@ -2,12 +2,13 @@
   <div class="app-header">
     <div class="content-wrapper">
       <div class="logo">
-        <span class="paopao">这里是个logo</span>
+        <span class="xv">Electron App</span>
       </div>
       <div class="window-ctrl">
         <div class="app-ctrl">
           <i class="no-drag btn-margin iconfont icontheme" @click="themeModalVisible=!themeModalVisible"/>
-          <i class="no-drag btn-margin el-icon-setting"/>
+          <i class="no-drag btn-margin el-icon-setting" @click="openSetting"/>
+          <i class="no-drag btn-margin iconfont iconguding1" @click="alwaysOnTop" :class="{active: isAlwaysOnTop}"/>
         </div>
         <div class="sys-ctrl">
           <i class="no-drag btn-margin iconfont iconzuixiaohua2" @click="minimize"/>
@@ -23,8 +24,8 @@
 </template>
 
 <script>
-  // import {ipcRenderer} from 'electron'
   import ThemeModal from "@/components/ThemeModal";
+  import {urlResolver} from "@/util";
 
   export default {
     name: "AppHeader",
@@ -32,6 +33,9 @@
     computed: {
       isMaximize() {
         return this.$store.getters.getIsMaximize
+      },
+      isAlwaysOnTop() {
+        return this.$store.getters.getIsAlwaysOnTop
       }
     },
     data() {
@@ -42,6 +46,9 @@
     methods: {
       close() {
         this.$store.commit('close')
+      },
+      alwaysOnTop() {
+        this.$store.commit('alwaysOnTop')
       },
       minimize() {
         this.$store.commit('minimize')
@@ -54,6 +61,10 @@
       },
       setTheme(theme) {
         this.$store.commit('setTheme', theme)
+      },
+      openSetting() {
+        const url = urlResolver(this, {name: 'setting'})
+        this.$store.commit('openSetting', url)
       },
       handleOk(theme) {
         if (theme) {
@@ -69,6 +80,8 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../assets/style/constant";
+
   .app-header {
     user-select: none;
     -webkit-app-region: drag;
@@ -77,16 +90,20 @@
       height: 100%;
       display: flex;
       align-items: center;
+      letter-spacing: 2px;
+      transform: scale(1.25) translate(20px, 0);
+      font-style: italic;
     }
 
     .content-wrapper {
       transition: background-color .5s;
       width: 100%;
-      height: 50px;
+      height: $MainHeaderHeight;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 10px;
+      overflow: hidden;
     }
 
     .no-drag {
@@ -102,8 +119,12 @@
       }
 
       .app-ctrl {
-        .theme-list {
-
+        .iconguding1 {
+          &.active {
+            color: #fff;
+            display: inline-block;
+            transform: rotate(-45deg);
+          }
         }
       }
 

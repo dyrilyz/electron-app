@@ -2,14 +2,25 @@
     font-family: "SY HeiTi";
     src: url("./SourceHanSansCN-Light.otf");
 }
+
 @font-face {
     font-family: "Pao Pao";
     src: url("./paopao.ttf");
 }
 
+@font-face {
+    font-family: "Logo Xiao Wei";
+    src: url("./logo.ttf");
+}
+
 .heiti {
     font-family: "SY HeiTi";
 }
+
 .paopao {
     font-family: "Pao Pao";
+}
+
+.xv {
+    font-family: "Logo Xiao Wei";
 }

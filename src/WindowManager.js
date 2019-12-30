@@ -80,61 +80,12 @@ async function winToWin(fromId, toId, eName, data) {
   toWin.webContents.send(eName, data)
 }
 
-// 事件中转(子窗口->父窗口)
-ipcMain.on('child-transfer',
-  /**
-   * 事件中转(子窗口->父窗口)
-   * @param e
-   * @param meta [
-   *      id: 窗口id
-   *      eName 事件名称
-   *      data 数据
-   *  ]
-   */
-  (e, meta) => {
-    const win = BrowserWindow.fromId(meta.id)
-    if (win) {
-      const parent = win.getParentWindow()
-      parent && parent.webContents.send(meta.eName, meta.data)
-    }
-  }
-)
-
-// event.sender为渲染进程的webContent对象
-ipcMain.on('get-window-id', e => {
-  const win = BrowserWindow.fromWebContents(e.sender)
-  if (win) {
-    e.reply('reply-window-id', win.id)
-  }
-})
-
-ipcMain.on('win-minimize', (e, id) => {
-  if (id) {
-    const win = getShowedWinById(id)
-    win && win.minimize()
-  }
-})
-
-ipcMain.on('win-maximize', (e, id) => {
-  if (id) {
-    const win = getShowedWinById(id)
-    win && win.maximize()
-  }
-})
-
-ipcMain.on('win-unmaximize', (e, id) => {
-  if (id) {
-    const win = getShowedWinById(id)
-    win && win.unmaximize()
-  }
-
-})
-
-ipcMain.on('win-close', (e, id) => {
-  if (id) {
-    const win = getShowedWinById(id)
-    win && win.close()
-  }
+// 事件中转
+ipcMain.on('notify', (e, {eName, data}) => {
+  const arr = BrowserWindow.getAllWindows().filter(win => win.webContents !== e.sender)
+  arr.forEach(win => {
+    win.webContents.send(eName, data)
+  })
 })
 
 export default {

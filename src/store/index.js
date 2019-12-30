@@ -1,69 +1,82 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {ipcRenderer} from 'electron'
+import {ipcRenderer, remote} from 'electron'
 
+const win = remote.getCurrentWindow()
 const themeKey = '__theme_style'
+
+const state = {
+  theme: 'theme-red',
+  winId: -1,
+  isMaximize: false,
+  isAlwaysOnTop: win.isAlwaysOnTop()
+}
+
+const getters = {
+  getTheme(state) {
+    const theme = localStorage.getItem(themeKey)
+    if (theme) {
+      state.theme = theme
+    }
+    return state.theme
+  },
+  getIsMaximize: state => state.isMaximize,
+  getIsAlwaysOnTop: state => state.isAlwaysOnTop
+}
+
+const mutations = {
+  setTheme(state, theme) {
+    if (theme) {
+      localStorage.setItem(themeKey, theme)
+      state.theme = theme
+    }
+  },
+  minimize() {
+    win.minimize()
+  },
+  maximize() {
+    win.maximize()
+  },
+  unmaximize() {
+    win.unmaximize()
+  },
+  close(state) {
+    ipcRenderer.send('notify', {eName: 'refresh-store', data: {state}})
+    win.close()
+  },
+  setMaximize(state, data) {
+    if (state.isMaximize !== data) {
+      state.isMaximize = data
+    }
+  },
+  alwaysOnTop(state) {
+    state.isAlwaysOnTop = !state.isAlwaysOnTop
+    win.setAlwaysOnTop(state.isAlwaysOnTop)
+  },
+  openSetting(state, url) {
+    const data = {
+      url,
+      modal: true,
+      winId: win.id,
+      width: 600,
+      height: 650,
+      minWidth: 600,
+      minHeight: 650,
+    }
+    ipcRenderer.send('open-window', data)
+  }
+}
 
 Vue.use(Vuex)
 
-function getWinId() {
-  return new Promise(resolve => {
-    ipcRenderer.once('reply-window-id', (e, id) => {
-      resolve(id)
-    })
-    ipcRenderer.send('get-window-id')
-  })
-}
-
-const store = new Vuex.Store({
-  state: {
-    theme: 'theme-red',
-    winId: -1,
-    isMaximize: false,
-  },
-  getters: {
-    getTheme(state) {
-      const theme = localStorage.getItem(themeKey)
-      if (theme) {
-        state.theme = theme
-      }
-      return state.theme
-    },
-    getIsMaximize: state => state.isMaximize
-  },
-  mutations: {
-    setTheme(state, theme) {
-      if (theme) {
-        localStorage.setItem(themeKey, theme)
-        state.theme = theme
-      }
-    },
-    async minimize() {
-      const id = await getWinId()
-      ipcRenderer.send('win-minimize', id)
-    },
-    async maximize() {
-      const id = await getWinId()
-      ipcRenderer.send('win-maximize', id)
-    },
-    async unmaximize() {
-      const id = await getWinId()
-      ipcRenderer.send('win-unmaximize', id)
-    },
-    async close() {
-      const id = await getWinId()
-      ipcRenderer.send('win-close', id)
-    },
-    setMaximize(state, data) {
-      if (state.isMaximize !== data) {
-        state.isMaximize = data
-      }
-    }
-  }
-})
+const store = new Vuex.Store({state, getters, mutations})
 
 ipcRenderer.on('win-maximize', (e, data) => {
   store.commit('setMaximize', data)
+})
+
+ipcRenderer.on('refresh-store', (e, {state}) => {
+  Object.assign(store.state, state)
 })
 
 export default store

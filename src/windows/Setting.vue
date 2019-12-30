@@ -1,17 +1,18 @@
 <template>
   <div class="setting">
-    <app-header/>
-    <div>this is setting window</div>
-    <div><router-link :to="{name:'main'}">main</router-link></div>
+    <other-header title="设置"/>
+    <div class="other-container">
+      设置窗口
+    </div>
   </div>
 </template>
 
 <script>
-  import AppHeader from "@/components/AppHeader";
+  import OtherHeader from "@/components/OtherHeader";
 
   export default {
     name: "Setting",
-    components: {AppHeader}
+    components: {OtherHeader}
   }
 </script>
 

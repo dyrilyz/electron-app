@@ -1,14 +1,14 @@
 'use strict'
 
-import {app, protocol, Menu, ipcMain} from 'electron'
+import {app, protocol, Menu, ipcMain, BrowserWindow} from 'electron'
 import {createProtocol, installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
 import WindowManager from './WindowManager'
+import {copy} from "@/util"
 
 const scheme = 'app'
 const isMacOS = process.platform === 'darwin'
 const isWindows = process.platform === 'win32'
 const isDevelopment = process.env.NODE_ENV !== 'production'
-// Menu.setApplicationMenu(null)
 
 // 定义全局窗口对象，防止js垃圾回收时导致窗口对象被回收
 let win
@@ -19,16 +19,15 @@ protocol.registerSchemesAsPrivileged([{
 }])
 
 function createWindow() {
-  win = WindowManager.createWindow({}, true, 'win-main')
-
+  win = WindowManager.createWindow()
   if (process.env.WEBPACK_DEV_SERVER_URL) {
+    console.log(process.env.WEBPACK_DEV_SERVER_URL)
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol(scheme)
     win.loadURL(scheme + '://./index.html')
   }
-
+  if (!process.env.IS_TEST) win.webContents.openDevTools()
 }
 
 app.on('window-all-closed', () => {
@@ -52,10 +51,19 @@ app.on('ready', async () => {
   createWindow()
 })
 
-ipcMain.on('win-minimize', e => {
-  console.log(e)
-  console.log('123123')
-  createWindow()
+ipcMain.on('open-window', (e, data) => {
+  const {url, modal = false, winId} = data
+  if (url) {
+    const opt = copy(data)
+    if (modal && winId) {
+      Object.assign(opt, {parent: BrowserWindow.fromId(winId)})
+    }
+    delete opt.modal
+    delete opt.winId
+    win = WindowManager.createWindow(opt)
+    win.loadURL(url)
+    if (!process.env.IS_TEST) win.webContents.openDevTools()
+  }
 })
 
 if (isDevelopment) {
@@ -70,4 +78,6 @@ if (isDevelopment) {
       app.quit()
     })
   }
+} else {
+  Menu.setApplicationMenu(null)
 }

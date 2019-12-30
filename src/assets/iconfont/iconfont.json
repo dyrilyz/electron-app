@@ -41,6 +41,13 @@
       "unicode_decimal": 59209
     },
     {
+      "icon_id": "8553498",
+      "name": "固定",
+      "font_class": "guding1",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
       "icon_id": "10128012",
       "name": "theme",
       "font_class": "theme",

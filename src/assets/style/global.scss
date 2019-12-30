@@ -1,3 +1,4 @@
+@import "./constant";
 
 * {
   box-sizing: border-box
@@ -6,6 +7,8 @@
 html, body {
   margin: 0;
   padding: 0;
+  font-family: "SY HeiTi";
+  font-size: 14px;
 }
 
 .app {
@@ -32,4 +35,14 @@ html, body {
     }
   }
 
+}
+
+.main-container {
+  height: calc(100vh - #{$MainHeaderHeight});
+  overflow: hidden;
+}
+
+.other-container {
+  height: calc(100vh - #{$OtherHeaderHeight});
+  overflow: hidden;
 }
