@@ -4,6 +4,7 @@ import {ipcRenderer, remote} from 'electron'
 
 const win = remote.getCurrentWindow()
 const themeKey = '__theme_style'
+console.log(win.id, win.isModal())
 
 const state = {
   theme: 'theme-red',
@@ -40,8 +41,7 @@ const mutations = {
   unmaximize() {
     win.unmaximize()
   },
-  close(state) {
-    ipcRenderer.send('notify', {eName: 'refresh-store', data: {state}})
+  close() {
     win.close()
   },
   setMaximize(state, data) {
@@ -56,26 +56,35 @@ const mutations = {
   openSetting(state, url) {
     const data = {
       url,
-      modal: true,
-      winId: win.id,
-      width: 600,
-      height: 650,
-      minWidth: 600,
-      minHeight: 650,
+      opt: {
+        modal: true,
+        width: 600,
+        height: 650,
+        minWidth: 600,
+        minHeight: 650,
+        maxWidth: 600,
+        maxHeight: 650,
+      },
+      parentId: win.id,
     }
     ipcRenderer.send('open-window', data)
+  },
+}
+
+const actions = {
+  syncWindow({state}) {
+    ipcRenderer.send('notify', {eName: 'sync-store', data: {state}})
   }
 }
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({state, getters, mutations})
-
+const store = new Vuex.Store({state, getters, mutations, actions})
 ipcRenderer.on('win-maximize', (e, data) => {
   store.commit('setMaximize', data)
 })
 
-ipcRenderer.on('refresh-store', (e, {state}) => {
+ipcRenderer.on('sync-store', (e, {state}) => {
   Object.assign(store.state, state)
 })
 

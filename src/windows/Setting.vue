@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import OtherHeader from "@/components/OtherHeader";
+  import OtherHeader from "@/components/OtherHeader"
 
   export default {
     name: "Setting",

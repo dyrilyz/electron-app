@@ -12,7 +12,7 @@
         <div class="theme-block" v-for="theme in themeList" :key="theme.value">
           <label class="theme-radio" :class="radioClassList(theme)">
             <input type="radio" v-model="checked" :value="theme.value"/>
-            <span v-text="theme.title"/>
+            <span class="xv" v-text="theme.title"/>
             <i class="marker">
               <i class="el-icon-check"/>
             </i>
@@ -85,7 +85,7 @@
         user-select: none;
         color: #fff;
         letter-spacing: 3px;
-        font-size: 16px;
+        font-size: 18px;
         box-shadow: 0 0 4px #8c8c8c;
         overflow: hidden;
 

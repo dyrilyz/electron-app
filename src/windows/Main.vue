@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <app-header/>
-    <div class="app-container">
+    <div class="main-container">
       这是主窗口
     </div>
     <router-view/>

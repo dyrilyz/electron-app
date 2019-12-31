@@ -2,30 +2,31 @@
   <div class="app-header">
     <div class="content-wrapper">
       <div class="logo">
-        <span class="xv">Electron App</span>
+        <span class="xb">Electron App</span>
       </div>
       <div class="window-ctrl">
         <div class="app-ctrl">
-          <i class="no-drag btn-margin iconfont icontheme" @click="themeModalVisible=!themeModalVisible"/>
+          <i class="no-drag btn-margin iconfont icontheme" @click="openThemeModal"/>
           <i class="no-drag btn-margin el-icon-setting" @click="openSetting"/>
-          <i class="no-drag btn-margin iconfont iconguding1" @click="alwaysOnTop" :class="{active: isAlwaysOnTop}"/>
+          <i class="no-drag btn-margin iconfont iconguding1" @click="windowCtrl('alwaysOnTop')"
+             :class="{active: isAlwaysOnTop}"/>
         </div>
         <div class="sys-ctrl">
-          <i class="no-drag btn-margin iconfont iconzuixiaohua2" @click="minimize"/>
-          <i class="no-drag btn-margin iconfont iconzuixiaohua" @click="unmaximize" v-if="isMaximize"/>
-          <i class="no-drag btn-margin iconfont iconquanpingzuidahua" @click="maximize" v-else/>
-          <i class="no-drag btn-margin iconfont iconClose" @click="close"/>
+          <i class="no-drag btn-margin iconfont iconzuixiaohua2" @click="windowCtrl('minimize')"/>
+          <i class="no-drag btn-margin iconfont iconzuixiaohua" @click="windowCtrl('unmaximize')" v-if="isMaximize"/>
+          <i class="no-drag btn-margin iconfont iconquanpingzuidahua" @click="windowCtrl('maximize')" v-else/>
+          <i class="no-drag btn-margin iconfont iconClose" @click="windowCtrl('close')"/>
         </div>
       </div>
     </div>
 
-    <theme-modal :visible.sync="themeModalVisible" @ok="handleOk" @cancel="handleCancel"/>
+    <theme-modal :visible.sync="themeModalVisible" @ok="handleOk" @cancel="themeModalVisible = false"/>
   </div>
 </template>
 
 <script>
-  import ThemeModal from "@/components/ThemeModal";
-  import {urlResolver} from "@/util";
+  import ThemeModal from "@/components/ThemeModal"
+  import {urlResolver} from "@/util"
 
   export default {
     name: "AppHeader",
@@ -44,37 +45,21 @@
       }
     },
     methods: {
-      close() {
-        this.$store.commit('close')
-      },
-      alwaysOnTop() {
-        this.$store.commit('alwaysOnTop')
-      },
-      minimize() {
-        this.$store.commit('minimize')
-      },
-      unmaximize() {
-        this.$store.commit('unmaximize')
-      },
-      maximize() {
-        this.$store.commit('maximize')
-      },
-      setTheme(theme) {
-        this.$store.commit('setTheme', theme)
+      windowCtrl(...args) {
+        this.$store.commit(...args)
+        this.$store.dispatch('syncWindow')
       },
       openSetting() {
         const url = urlResolver(this, {name: 'setting'})
-        this.$store.commit('openSetting', url)
+        this.windowCtrl('openSetting', url)
       },
       handleOk(theme) {
-        if (theme) {
-          this.setTheme(theme)
-        }
+        theme && this.windowCtrl('setTheme', theme)
         this.themeModalVisible = false
       },
-      handleCancel() {
-        this.themeModalVisible = false
-      },
+      openThemeModal() {
+        this.themeModalVisible = true
+      }
     },
   }
 </script>
