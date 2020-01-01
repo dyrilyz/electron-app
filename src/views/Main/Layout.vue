@@ -1,18 +1,21 @@
 <template>
   <div class="layout">
-    <navigation class="layout-left"/>
-    <div class="layout-right">
+    <beautiful-scrollbar class="layout-left">
+      <navigation/>
+    </beautiful-scrollbar>
+    <beautiful-scrollbar class="layout-right">
       <router-view/>
-    </div>
+    </beautiful-scrollbar>
   </div>
 </template>
 
 <script>
   import Navigation from "@/views/Main/modules/Navigation"
+  import BeautifulScrollbar from "@/components/BeautifulScrollbar"
 
   export default {
     name: "Layout",
-    components: {Navigation}
+    components: {Navigation, BeautifulScrollbar},
   }
 </script>
 
@@ -22,8 +25,6 @@
 
     .layout-left {
       width: 180px;
-      overflow-x: hidden;
-      overflow-y: auto;
       border-right: 1px solid #e1e1e2;
       background-color: #f5f5f7;
     }

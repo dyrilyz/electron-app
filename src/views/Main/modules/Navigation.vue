@@ -19,6 +19,8 @@
 <style scoped lang="scss">
   .nav {
     .root-nav {
+      margin: 0;
+
       dt {
         padding: 0 10px;
         font-size: 12px;
