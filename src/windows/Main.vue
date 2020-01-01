@@ -1,19 +1,18 @@
 <template>
   <div class="main">
     <app-header/>
-    <div class="main-container">
-      这是主窗口
-    </div>
-    <router-view/>
+    <layout class="main-container"/>
   </div>
 </template>
 
 <script>
-  import AppHeader from "@/components/AppHeader";
+  import AppHeader from "@/components/AppHeader"
+  import Layout from "@/views/Main/Layout"
 
   export default {
     components: {
       AppHeader,
+      Layout
     },
   }
 </script>

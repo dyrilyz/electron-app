@@ -93,6 +93,7 @@
 
     .no-drag {
       -webkit-app-region: none;
+      cursor: pointer;
     }
 
     .window-ctrl {

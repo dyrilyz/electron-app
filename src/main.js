@@ -5,6 +5,7 @@ import store from '@/store'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
 Vue.config.productionTip = false
 

@@ -5,7 +5,7 @@ $themeRed: #c62f2f;
 $themeRed_logoColor: #ffffff;
 $themeRed_splitLine: #a82828;
 $themeRed_iconColor: #eea1a1;
-$themeRed_iconColor_Hover: #eea1a1;
+$themeRed_iconColor_Hover: #eed3ce;
 $themeRed_ElButtonApp_Hover: #ff3f38;
 
 // 黑色主题
@@ -120,6 +120,14 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
           .marker {
             border-bottom-color: $color;
           }
+        }
+      }
+    }
+
+    .nav {
+      .root-nav {
+        dd.active {
+          border-color: $color;
         }
       }
     }

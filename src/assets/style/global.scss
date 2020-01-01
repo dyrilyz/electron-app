@@ -1,7 +1,7 @@
 @import "./constant";
 
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 html, body {
@@ -38,10 +38,23 @@ html, body {
 
 .main-container {
   height: calc(100vh - #{$MainHeaderHeight});
-  overflow: hidden;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+
+    &-thumb {
+      background-color: rgba(207, 207, 207, 0.76);
+      border-radius: 3px;
+    }
+
+    &-track {
+      background-color: transparent;
+    }
+  }
 }
 
 .other-container {
   height: calc(100vh - #{$OtherHeaderHeight});
-  overflow: hidden;
+  overflow: auto;
 }
