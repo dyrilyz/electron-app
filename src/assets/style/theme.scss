@@ -6,6 +6,7 @@ $themeRed_logoColor: #ffffff;
 $themeRed_splitLine: #a82828;
 $themeRed_iconColor: #eea1a1;
 $themeRed_iconColor_Hover: #eed3ce;
+$themeRed_themeMark: #fc4646;
 $themeRed_ElButtonApp_Hover: #ff3f38;
 
 // 黑色主题
@@ -14,6 +15,7 @@ $themeDark_logoColor: #ffffff;
 $themeDark_splitLine: #828487;
 $themeDark_iconColor: #828487;
 $themeDark_iconColor_Hover: #f5f5f5;
+$themeDark_themeMark: #4f4f52;
 $themeDark_ElButtonApp_Hover: #666;
 
 // 绿色主题
@@ -22,6 +24,7 @@ $themeGreen_logoColor: #ffffff;
 $themeGreen_splitLine: #a0ffcc;
 $themeGreen_iconColor: #a0ffcc;
 $themeGreen_iconColor_Hover: #ffffff;
+$themeGreen_themeMark: #00c344;
 $themeGreen_ElButtonApp_Hover: #38b169;
 
 // 橙色主题
@@ -30,6 +33,7 @@ $themeOrange_logoColor: #ffffff;
 $themeOrange_splitLine: #b9561a;
 $themeOrange_iconColor: #292929;
 $themeOrange_iconColor_Hover: #ffffff;
+$themeOrange_themeMark: #ff5b05;
 $themeOrange_ElButtonApp_Hover: #ff6100;
 
 // 蓝色主题
@@ -38,6 +42,7 @@ $themeBlue_logoColor: #ffffff;
 $themeBlue_splitLine: #008aca;
 $themeBlue_iconColor: #003b56;
 $themeBlue_iconColor_Hover: #ffffff;
+$themeBlue_themeMark: #2180f7;
 $themeBlue_ElButtonApp_Hover: #2180f7;
 
 // 紫色主题
@@ -46,9 +51,10 @@ $themePurple_logoColor: #ffffff;
 $themePurple_splitLine: #af8dff;
 $themePurple_iconColor: #f19dff;
 $themePurple_iconColor_Hover: #ffffff;
+$themePurple_themeMark: #5a24b1;
 $themePurple_ElButtonApp_Hover: #5a24b1;
 
-@mixin theme($selector, $color, $logoColor, $splitLine, $iconColor, $iconColor_Hover, $ElButtonApp_Hover) {
+@mixin theme($selector, $color, $logoColor, $splitLine, $iconColor, $iconColor_Hover, $themeMark, $ElButtonApp_Hover) {
   .#{$selector} {
 
     .app-header {
@@ -90,27 +96,27 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
       .theme-list-wrapper {
         .theme-radio {
           &.theme-red {
-            background-color: $themeRed
+            background-color: $themeRed;
           }
 
           &.theme-dark {
-            background-color: $themeDark
+            background-color: $themeDark;
           }
 
           &.theme-green {
-            background-color: $themeGreen
+            background-color: $themeGreen;
           }
 
           &.theme-orange {
-            background-color: $themeOrange
+            background-color: $themeOrange;
           }
 
           &.theme-blue {
-            background-color: $themeBlue
+            background-color: $themeBlue;
           }
 
           &.theme-purple {
-            background-color: $themePurple
+            background-color: $themePurple;
           }
 
           &.active {
@@ -118,7 +124,7 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
           }
 
           .marker {
-            border-bottom-color: $color;
+            border-bottom-color: $themeMark;
           }
         }
       }
@@ -134,14 +140,14 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
   }
 }
 
-@include theme('theme-red', $themeRed, $themeRed_logoColor, $themeRed_splitLine, $themeRed_iconColor, $themeRed_iconColor_Hover, $themeRed_ElButtonApp_Hover);
+@include theme('theme-red', $themeRed, $themeRed_logoColor, $themeRed_splitLine, $themeRed_iconColor, $themeRed_iconColor_Hover, $themeRed_themeMark, $themeRed_ElButtonApp_Hover);
 
-@include theme('theme-dark', $themeDark, $themeDark_logoColor, $themeDark_splitLine, $themeDark_iconColor, $themeDark_iconColor_Hover, $themeDark_ElButtonApp_Hover);
+@include theme('theme-dark', $themeDark, $themeDark_logoColor, $themeDark_splitLine, $themeDark_iconColor, $themeDark_iconColor_Hover, $themeDark_themeMark, $themeDark_ElButtonApp_Hover);
 
-@include theme('theme-green', $themeGreen, $themeGreen_logoColor, $themeGreen_splitLine, $themeGreen_iconColor, $themeGreen_iconColor_Hover, $themeGreen_ElButtonApp_Hover);
+@include theme('theme-green', $themeGreen, $themeGreen_logoColor, $themeGreen_splitLine, $themeGreen_iconColor, $themeGreen_iconColor_Hover, $themeGreen_themeMark, $themeGreen_ElButtonApp_Hover);
 
-@include theme('theme-orange', $themeOrange, $themeOrange_logoColor, $themeOrange_splitLine, $themeOrange_iconColor, $themeOrange_iconColor_Hover, $themeOrange_ElButtonApp_Hover);
+@include theme('theme-orange', $themeOrange, $themeOrange_logoColor, $themeOrange_splitLine, $themeOrange_iconColor, $themeOrange_iconColor_Hover, $themeOrange_themeMark, $themeOrange_ElButtonApp_Hover);
 
-@include theme('theme-blue', $themeBlue, $themeBlue_logoColor, $themeBlue_splitLine, $themeBlue_iconColor, $themeBlue_iconColor_Hover, $themeBlue_ElButtonApp_Hover);
+@include theme('theme-blue', $themeBlue, $themeBlue_logoColor, $themeBlue_splitLine, $themeBlue_iconColor, $themeBlue_iconColor_Hover, $themeBlue_themeMark, $themeBlue_ElButtonApp_Hover);
 
-@include theme('theme-purple', $themePurple, $themePurple_logoColor, $themePurple_splitLine, $themePurple_iconColor, $themePurple_iconColor_Hover, $themePurple_ElButtonApp_Hover);
+@include theme('theme-purple', $themePurple, $themePurple_logoColor, $themePurple_splitLine, $themePurple_iconColor, $themePurple_iconColor_Hover, $themePurple_themeMark, $themePurple_ElButtonApp_Hover);
