@@ -92,7 +92,7 @@
     }
 
     .no-drag {
-      -webkit-app-region: none;
+      -webkit-app-region: no-drag;
       cursor: pointer;
     }
 

@@ -132,7 +132,7 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
 
     .nav {
       .root-nav {
-        dd.active {
+        dd a.router-link-active {
           border-color: $color;
         }
       }
