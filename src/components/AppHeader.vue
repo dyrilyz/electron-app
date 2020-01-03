@@ -71,15 +71,6 @@
     user-select: none;
     -webkit-app-region: drag;
 
-    .logo {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      letter-spacing: 2px;
-      transform: scale(1.25) translate(20px, 0);
-      font-style: italic;
-    }
-
     .content-wrapper {
       transition: background-color .5s;
       width: 100%;
@@ -91,8 +82,17 @@
       overflow: hidden;
     }
 
+    .logo {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      letter-spacing: 2px;
+      transform: scale(1.25) translate(20px, 0);
+      font-style: italic;
+    }
+
     .no-drag {
-      -webkit-app-region: none;
+      -webkit-app-region: no-drag;
     }
 
     .window-ctrl {
