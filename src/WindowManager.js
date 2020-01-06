@@ -8,7 +8,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     minHeight: 700,
     frame: false,
     // titleBarStyle: 'hiddenInset',
-    transparent: true,
+    // transparent: true,
     show: false,
     webPreferences: {
       nodeIntegration: true
