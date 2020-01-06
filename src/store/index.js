@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {ipcRenderer, remote} from 'electron'
+import {configAction} from '@/database-api'
 
 const win = remote.getCurrentWindow()
 const themeKey = '__theme_style'
@@ -14,13 +15,7 @@ const state = {
 }
 
 const getters = {
-  getTheme(state) {
-    const theme = localStorage.getItem(themeKey)
-    if (theme) {
-      state.theme = theme
-    }
-    return state.theme
-  },
+  getTheme: state => state.theme,
   getIsMaximize: state => state.isMaximize,
   getIsAlwaysOnTop: state => state.isAlwaysOnTop,
   getPlatform: state => state.platform
@@ -29,8 +24,8 @@ const getters = {
 const mutations = {
   setTheme(state, theme) {
     if (theme) {
-      localStorage.setItem(themeKey, theme)
       state.theme = theme
+      configAction.setConfig(themeKey, theme)
     }
   },
   minimize() {
@@ -81,6 +76,16 @@ const actions = {
 Vue.use(Vuex)
 
 const store = new Vuex.Store({state, getters, mutations, actions})
+
+async function init() {
+  const themeObj = await configAction.getConfig(themeKey)
+  if (themeObj) {
+    await store.commit('setTheme', themeObj.value)
+  }
+}
+
+init()
+
 ipcRenderer.on('win-maximize', (e, data) => {
   store.commit('setMaximize', data)
 })

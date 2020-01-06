@@ -1,21 +1,2 @@
-import './action'
-import Actions from "./action/BaseAction"
-
-console.log('database', Actions)
-
-const databaseApi = {
-  async get(name, params) {
-    console.log(params)
-  },
-  async post(name, params) {
-    console.log(params)
-  },
-  async update(name, params) {
-    console.log(params)
-  },
-  async delete(name, params) {
-    console.log(params)
-  },
-}
-
-export default databaseApi
+export configAction from './action/configAction'
+export menuAction from './action/menuAction'

@@ -2,22 +2,26 @@ import db from './dbInstance'
 
 const coll = db.collection('config')
 
+export async function findConfig() {
+  return coll.find().toArray()
+}
+
 export async function findConfigByKey(key) {
-  return await coll.findOne({key})
+  return coll.findOne({key})
 }
 
 export async function insertConfig(doc) {
-  await coll.insert([doc])
+  return coll.insert([doc])
 }
 
 export async function insertConfigList(docs) {
-  await coll.insert(docs)
+  return coll.insert(docs)
 }
 
 export async function removeConfigByKey(key) {
-  await coll.remove({key})
+  return coll.remove({key})
 }
 
 export async function updateConfigByKey(key, doc) {
-  await coll.remove({key}, doc)
+  return coll.update({key}, doc)
 }

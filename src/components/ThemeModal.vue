@@ -28,11 +28,12 @@
 </template>
 
 <script>
+  import {configAction} from '@/database-api'
+
   export default {
     data() {
-      const checked = this.$store.getters.getTheme
       return {
-        checked,
+        checked: this.$store.getters.getTheme,
         themeList: [
           {title: '中国红', value: 'theme-red'},
           {title: '炫酷黑', value: 'theme-dark'},
@@ -43,7 +44,16 @@
         ]
       }
     },
+    created() {
+      this.init()
+    },
     methods: {
+      async init() {
+        const theme = await configAction.getConfig('__theme_style')
+        if (theme) {
+          this.checked = theme.value
+        }
+      },
       radioClassList(theme) {
         const arr = [theme.value]
         if (this.checked === theme.value) {
@@ -53,7 +63,7 @@
       },
       handleBtnClick(target) {
         this.$emit(target, this.checked)
-      }
+      },
     }
   }
 </script>
