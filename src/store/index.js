@@ -4,7 +4,6 @@ import {ipcRenderer, remote} from 'electron'
 
 const win = remote.getCurrentWindow()
 const themeKey = '__theme_style'
-console.log(win.id, win.isModal())
 
 const state = {
   theme: 'theme-red',

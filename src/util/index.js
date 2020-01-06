@@ -25,3 +25,7 @@ export function hasModal() {
 export function hasNotModal() {
   return !hasModal()
 }
+
+export function random(range) {
+  return Math.round(Math.random() * range)
+}
