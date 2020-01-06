@@ -60,6 +60,15 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
     .app-header {
       background-color: $color;
 
+      &.mac {
+        .window-ctrl .no-drag {
+          color: $color;
+          &:hover {
+            color: $color;
+          }
+        }
+      }
+
       .logo {
         font-size: 20px;
         color: $logoColor;

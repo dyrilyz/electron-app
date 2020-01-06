@@ -1,8 +1,8 @@
 <template>
-  <div class="app-header">
+  <div class="app-header" :class="{mac:isMac}">
     <div class="content-wrapper">
       <div class="logo">
-        <span class="xb">Electron App</span>
+        <span class="xb" v-show="!isMac">Electron App</span>
       </div>
       <div class="window-ctrl">
         <div class="app-ctrl">
@@ -11,7 +11,7 @@
           <i class="no-drag btn-margin iconfont iconguding1" @click="windowCtrl('alwaysOnTop')"
              :class="{active: isAlwaysOnTop}"/>
         </div>
-        <div class="sys-ctrl">
+        <div class="sys-ctrl" v-show="!isMac">
           <i class="no-drag btn-margin iconfont iconzuixiaohua2" @click="windowCtrl('minimize')"/>
           <i class="no-drag btn-margin iconfont iconzuixiaohua" @click="windowCtrl('unmaximize')" v-if="isMaximize"/>
           <i class="no-drag btn-margin iconfont iconquanpingzuidahua" @click="windowCtrl('maximize')" v-else/>
@@ -41,7 +41,8 @@
     },
     data() {
       return {
-        themeModalVisible: false
+        themeModalVisible: false,
+        isMac: this.$store.getters.getPlatform === 'darwin'
       }
     },
     methods: {
@@ -68,13 +69,20 @@
   @import "../assets/style/constant";
 
   .app-header {
+    box-sizing: border-box;
     user-select: none;
+    height: $MainHeaderHeight;
     -webkit-app-region: drag;
+
+    &.mac {
+      background-color: #f5f5f7;
+      border-bottom: 1px solid #e1e1e2;
+    }
 
     .content-wrapper {
       transition: background-color .5s;
       width: 100%;
-      height: $MainHeaderHeight;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;

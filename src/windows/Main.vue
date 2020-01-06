@@ -14,6 +14,11 @@
       AppHeader,
       Layout
     },
+    data() {
+      return {
+        platform: this.$store.getters.platform
+      }
+    }
   }
 </script>
 

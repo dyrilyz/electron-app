@@ -1,14 +1,14 @@
-import {Controller, Get, Post} from "@/database-api/action/BaseAction"
+import {Controller, Get} from "@/database-api/action/BaseAction"
 
 @Controller({name: 'config'})
 class ConfigAction {
 
-  @Get
+  @Get('hello')
   findConfig() {
     console.log('findConfig')
   }
 
-  @Post
+  @Get
   findConfig1() {
     console.log('findConfig1')
   }

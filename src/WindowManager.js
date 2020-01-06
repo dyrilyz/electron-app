@@ -15,6 +15,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     },
   }
 
+  // process.platform === 'darwin' && Object.assign(conf, {frame: true})
   opt && Object.assign(conf, opt)
   let win = new BrowserWindow(conf)
 

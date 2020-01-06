@@ -1,7 +1,7 @@
 import './action'
 import Actions from "./action/BaseAction"
 
-console.log(Actions)
+console.log('database', Actions)
 
 const databaseApi = {
   async get(name, params) {

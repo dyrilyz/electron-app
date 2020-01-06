@@ -9,7 +9,8 @@ const state = {
   theme: 'theme-red',
   winId: -1,
   isMaximize: false,
-  isAlwaysOnTop: win.isAlwaysOnTop()
+  isAlwaysOnTop: win.isAlwaysOnTop(),
+  platform: process.platform,
 }
 
 const getters = {
@@ -21,7 +22,8 @@ const getters = {
     return state.theme
   },
   getIsMaximize: state => state.isMaximize,
-  getIsAlwaysOnTop: state => state.isAlwaysOnTop
+  getIsAlwaysOnTop: state => state.isAlwaysOnTop,
+  getPlatform: state => state.platform
 }
 
 const mutations = {
