@@ -20,12 +20,17 @@ const mainRouter = {
     name: 'pms',
     meta: {topTitle: '应用', title: '禅道'},
     component: () => import('@/views/Main/PMS')
+  }, {
+    path: 'setting',
+    name: 'setting',
+    meta: {topTitle: '应用', title: '设置'},
+    component: () => import('@/views/Main/Settings')
   }]
 }
 
 const settingRouter = {
-  path: '/setting',
-  name: 'setting',
+  path: '/setting-win',
+  name: 'setting-win',
   component: Setting
 }
 

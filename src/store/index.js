@@ -2,10 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {ipcRenderer, remote} from 'electron'
 import {configAction} from '@/database-api'
+import {THEME_KEY} from "@/constant"
 
 const win = remote.getCurrentWindow()
-const themeKey = '__theme_style'
-
 const state = {
   theme: 'theme-red',
   winId: -1,
@@ -25,7 +24,7 @@ const mutations = {
   setTheme(state, theme) {
     if (theme) {
       state.theme = theme
-      configAction.setConfig(themeKey, theme)
+      configAction.setConfig(THEME_KEY, theme)
     }
   },
   minimize() {
@@ -78,7 +77,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({state, getters, mutations, actions})
 
 async function init() {
-  const themeObj = await configAction.getConfig(themeKey)
+  const themeObj = await configAction.getConfig(THEME_KEY)
   if (themeObj) {
     await store.commit('setTheme', themeObj.value)
   }

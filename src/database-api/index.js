@@ -1,2 +1,2 @@
-export configAction from './action/configAction'
-export menuAction from './action/menuAction'
+export configAction from '@/database-api/action/configAction'
+export menuAction from '@/database-api/action/menuAction'

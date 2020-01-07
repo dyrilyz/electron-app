@@ -1,11 +1,13 @@
-import '@/assets/font/font-face.css'
-import '@/assets/iconfont/iconfont.css'
 import Vue from 'vue'
 import store from '@/store'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
+import '@/assets/font/font-face.css'
+import '@/assets/iconfont/iconfont.css'
+import '@/assets/style/theme.scss'
+import '@/assets/style/global.scss'
 
 Vue.config.productionTip = false
 

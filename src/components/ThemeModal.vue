@@ -29,6 +29,7 @@
 
 <script>
   import {configAction} from '@/database-api'
+  import {THEME_KEY} from "@/constant"
 
   export default {
     data() {
@@ -49,7 +50,7 @@
     },
     methods: {
       async init() {
-        const theme = await configAction.getConfig('__theme_style')
+        const theme = await configAction.getConfig(THEME_KEY)
         if (theme) {
           this.checked = theme.value
         }

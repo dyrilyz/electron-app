@@ -10,10 +10,15 @@ module.exports = {
             // 打包绿色版（免安装版）
             {target: 'portable'}
           ]
+        },
+        mac: {
+          target: [
+            {target: 'dmg'}
+          ]
         }
       },
       // 主进程监听（HMR），开发环境中配置需要监听的主进程文件
-      mainProcessWatch: ['src/background.js', 'src/WindowManager.js'],
+      mainProcessWatch: ['src/background.js', 'src/WindowManager.js', 'src/inner-browser/index.js'],
     }
   }
 }

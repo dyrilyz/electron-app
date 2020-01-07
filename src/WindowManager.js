@@ -1,4 +1,5 @@
 import {BrowserWindow, ipcMain} from 'electron'
+import {login} from "@/inner-browser"
 
 function createWindow(opt, isDidFinishLoadShow = true) {
   const conf = {
@@ -11,11 +12,12 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     // transparent: true,
     show: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webSecurity: false
     },
   }
 
-  // process.platform === 'darwin' && Object.assign(conf, {frame: true})
+  process.platform === 'darwin' && Object.assign(conf, {frame: true})
   opt && Object.assign(conf, opt)
   let win = new BrowserWindow(conf)
 
@@ -62,6 +64,11 @@ ipcMain.on('open-window', (e, data) => {
   }
   const win = createWindow(opt)
   win.loadURL(url)
+})
+
+ipcMain.on('pms-login', (e, data) => {
+  login()
+  console.log(data)
 })
 
 export default {createWindow}

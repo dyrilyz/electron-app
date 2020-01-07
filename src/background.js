@@ -12,7 +12,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // 定义全局窗口对象，防止js垃圾回收时导致窗口对象被回收
 let win
 
-// 绕过安全策列，解决跨域
+// 注册协议
 protocol.registerSchemesAsPrivileged([{scheme, privileges: {secure: true, standard: true}}])
 
 function createMainWindow() {

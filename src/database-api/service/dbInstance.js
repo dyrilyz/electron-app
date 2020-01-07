@@ -1,5 +1,4 @@
-import {Db} from 'zangodb'
-
+const {Db} = window.zango
 let db = null
 
 function getDB() {

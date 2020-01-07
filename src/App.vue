@@ -15,9 +15,3 @@
     },
   }
 </script>
-
-<style lang="scss">
-  @import "./assets/style/theme";
-  @import "./assets/style/global";
-</style>
-
