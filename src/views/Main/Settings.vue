@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import {CHROME_PATH_MAC, CHROME_PATH_WIN, CHROME_PATH_KEY} from "@/constant"
+  import {CHROME_PATH_MAC, CHROME_PATH_WIN, KEY_CHROME_PATH} from "@/constant"
   import {configAction} from '@/database-api'
 
   export default {
@@ -42,7 +42,7 @@
     },
     methods: {
       async getConfig() {
-        const chromePath = await configAction.getConfig(CHROME_PATH_KEY)
+        const chromePath = await configAction.getConfig(KEY_CHROME_PATH)
         if (chromePath && chromePath.value) {
           this.configModel.chromePath = chromePath.value
         }
@@ -53,7 +53,7 @@
         }
       },
       handleSave() {
-        configAction.setConfig(CHROME_PATH_KEY, this.configModel.chromePath)
+        configAction.setConfig(KEY_CHROME_PATH, this.configModel.chromePath)
       }
     },
   }

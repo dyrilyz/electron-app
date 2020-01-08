@@ -1,10 +1,11 @@
 import puppeteer from 'puppeteer-core'
 import path from 'path'
+import {CHROME_PATH_MAC, CHROME_PATH_WIN} from "@/constant"
 
 const browserPaths = {
   // 'darwin': 'chrome-mac/Chromium.app/Contents/MacOS/Chromium',
-  'darwin': '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  'win32': 'chrome-mac/Chromium.app/Contents/MacOS/Chromium',
+  'darwin': CHROME_PATH_MAC,
+  'win32': CHROME_PATH_WIN,
 }
 
 

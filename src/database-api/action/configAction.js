@@ -12,7 +12,8 @@ export default {
     }
   },
 
-  async setConfig(key, value) {
+  async setConfig(obj) {
+    const {key, value} = obj
     const config = await findConfigByKey(key)
     if (config) {
       Object.assign(config, {value})

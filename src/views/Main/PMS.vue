@@ -7,7 +7,7 @@
 
 <script>
   import {ipcRenderer} from 'electron'
-  import {PMS_URL_KEY, CHROME_PATH_KEY} from "@/constant"
+  import {KEY_PMS_URL, KEY_CHROME_PATH} from "@/constant"
   import {configAction} from '@/database-api'
 
   export default {
@@ -23,14 +23,14 @@
     },
     methods: {
       async init() {
-        const chromePath = await configAction.getConfig(CHROME_PATH_KEY)
+        const chromePath = await configAction.getConfig(KEY_CHROME_PATH)
         if (!chromePath || !chromePath.value) {
           await this.$alert('chrome路径为配置', '提示', {showClose: false, confirmButtonText: '确定'})
           this.$router.replace({name: 'setting'})
           return
         }
 
-        const pmsUrl = await configAction.getConfig(PMS_URL_KEY)
+        const pmsUrl = await configAction.getConfig(KEY_PMS_URL)
         if (pmsUrl && pmsUrl.value) {
           this.pmsUrl = pmsUrl.value
         } else {
