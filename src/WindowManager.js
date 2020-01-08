@@ -1,6 +1,8 @@
 import {BrowserWindow, ipcMain} from 'electron'
 import {login} from "@/inner-browser"
 
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
 function createWindow(opt, isDidFinishLoadShow = true) {
   const conf = {
     width: 1020,
@@ -42,7 +44,10 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     }, 100)
   })
 
-  if (!process.env.IS_TEST) win.webContents.openDevTools()
+  // 如果是macOS，因为这里存在一个bug：
+  // 当开发者工具默认打开时，-webkit-app-region: drag可能会失效。
+  // issues：https://github.com/electron/electron/issues/3647
+  if (isDevelopment) win.webContents.openDevTools()
 
   return win
 }
