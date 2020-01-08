@@ -78,11 +78,6 @@
       transition: all .2s;
     }
 
-    &.mac {
-      background-color: #f5f5f7;
-      border-bottom: 1px solid #e1e1e2;
-    }
-
     .content-wrapper {
       transition: background-color .5s;
       width: 100%;

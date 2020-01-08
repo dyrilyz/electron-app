@@ -2,6 +2,7 @@ import {BrowserWindow, ipcMain} from 'electron'
 import {login} from "@/inner-browser"
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const isMacOS = process.platform === 'darwin'
 
 function createWindow(opt, isDidFinishLoadShow = true) {
   const conf = {
@@ -10,7 +11,6 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     minWidth: 1020,
     minHeight: 700,
     frame: false,
-    // titleBarStyle: 'hiddenInset',
     // transparent: true,
     show: false,
     webPreferences: {
@@ -19,7 +19,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     },
   }
 
-  process.platform === 'darwin' && Object.assign(conf, {frame: true})
+  process.platform === 'darwin' && Object.assign(conf, {titleBarStyle: 'hiddenInset'})
   opt && Object.assign(conf, opt)
   let win = new BrowserWindow(conf)
 
@@ -47,7 +47,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
   // 如果是macOS，因为这里存在一个bug：
   // 当开发者工具默认打开时，-webkit-app-region: drag可能会失效。
   // issues：https://github.com/electron/electron/issues/3647
-  if (isDevelopment) win.webContents.openDevTools()
+  if (isDevelopment && !isMacOS) win.webContents.openDevTools()
 
   return win
 }
