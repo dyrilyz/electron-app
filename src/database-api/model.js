@@ -1,6 +1,6 @@
-import {Interface, Field} from "@/database-api/decorator"
+import {Model, Field} from "@/database-api/decorator"
 
-export const ConfigIfc = new Interface([
+export const ConfigIfc = new Model([
   new Field({
     fieldName: 'key',
     type: String,

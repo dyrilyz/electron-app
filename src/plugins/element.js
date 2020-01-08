@@ -10,6 +10,9 @@ import {
   Message,
   MessageBox,
   Alert,
+  Table,
+  TableColumn,
+  Link,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -20,6 +23,9 @@ Vue.use(Input)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Alert)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Link)
 
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$alert = MessageBox.alert

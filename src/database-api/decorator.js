@@ -2,15 +2,15 @@ function handleModelValidate(target, name, descriptor) {
   console.log(target, name, descriptor)
 }
 
-export function ModelValidate(ifc: string) {
-  if (!(ifc instanceof Interface)) {
+export function ModelValidate(ifc) {
+  if (!(ifc instanceof Model)) {
     throw Error('类型错误')
   } else {
     return handleModelValidate
   }
 }
 
-export class Interface {
+export class Model {
   constructor(...fields) {
     fields.forEach(field => {
       if (!(field instanceof Field)) {

@@ -23,8 +23,19 @@ const mainRouter = {
   }, {
     path: 'setting',
     name: 'setting',
-    meta: {topTitle: '应用', title: '设置'},
+    meta: {topTitle: '设置', title: '系统设置'},
     component: () => import('@/views/Main/Settings')
+  }, {
+    path: 'table',
+    name: 'table',
+    meta: {topTitle: '设置', title: '应用配置'},
+    redirect: {name: 'tableList'},
+    component: () => import('@/components/Pages'),
+    children: [{
+      path: 'list',
+      name: 'tableList',
+      component: () => import('@/views/Main/Tables')
+    }]
   }]
 }
 

@@ -1,13 +1,14 @@
 <template>
   <div class="theme-modal">
-    <el-dialog v-bind="$attrs"
-               title="选择主题"
-               width="550px"
-               v-on="$listeners"
-               :close-on-click-modal="false"
-               :close-on-press-escape="false"
-               :modal="false"
-               :show-close="false">
+    <el-dialog
+      v-bind="$attrs"
+      v-on="$listeners"
+      title="选择主题"
+      width="550px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :modal="false"
+      :show-close="false">
       <div class="theme-list-wrapper">
         <div class="theme-block" v-for="theme in themeList" :key="theme.value">
           <label class="theme-radio" :class="radioClassList(theme)">
