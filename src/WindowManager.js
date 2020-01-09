@@ -6,11 +6,13 @@ const isMacOS = process.platform === 'darwin'
 
 function createWindow(opt, isDidFinishLoadShow = true) {
   const conf = {
-    width: 1020,
-    height: 700,
+    // width: 1020,
+    // height: 700,
+    width: 1980,
+    height: 1080,
     minWidth: 1020,
     minHeight: 700,
-    frame: true,
+    frame: false,
     // transparent: true,
     show: false,
     webPreferences: {
@@ -48,7 +50,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
   // 如果是macOS，因为这里存在一个bug：
   // 当开发者工具默认打开时，-webkit-app-region: drag可能会失效。
   // issues：https://github.com/electron/electron/issues/3647
-  if (isDevelopment && isMacOS) win.webContents.openDevTools()
+  if (isDevelopment && !isMacOS) win.webContents.openDevTools()
 
   return win
 }

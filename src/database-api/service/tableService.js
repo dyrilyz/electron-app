@@ -14,8 +14,8 @@ export async function addTable(doc) {
   return coll.insert([doc])
 }
 
-export async function removeTableById(id) {
-  return coll.remove({_id: id})
+export async function removeTableById(_id) {
+  return coll.remove({_id})
 }
 
 export async function updateTableById(id, $set) {

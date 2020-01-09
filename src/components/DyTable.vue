@@ -5,6 +5,7 @@
         <template v-if="item.slotName" v-slot="scope">
           <slot :name="item.slotName" :scope="scope"/>
         </template>
+        <template v-else-if="item.filter" v-slot="scope">{{item.filter(scope.row)}}</template>
       </el-table-column>
     </el-table>
   </div>
@@ -18,8 +19,6 @@
         type: Array,
         required: true
       }
-    },
-    created() {
     },
   }
 </script>

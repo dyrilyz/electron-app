@@ -8,7 +8,7 @@
         <el-form-item label="注释">
           <el-input
             type="textarea"
-            v-model="form.tableName"
+            v-model="form.tableComment"
             resize="none"
             :rows="5"
             placeholder="请输入"/>
@@ -24,6 +24,7 @@
 
 <script>
   import BeautifulScrollbar from "@/components/BeautifulScrollbar"
+  import {copy} from "@/util"
 
   export default {
     name: "TableModal",
@@ -31,13 +32,15 @@
     data() {
       return {
         form: {
-          tableName: ''
+          tableName: '',
+          tableComment: '',
         }
       }
     },
     methods: {
       handleBtnClick(target) {
-        this.$store.dispatch('tableModal/notify', {eName: target, data: ''})
+        const data = Object.assign({createTime: new Date()}, copy(this.form))
+        this.$store.dispatch('tableModal/notify', {eName: target, data})
       },
     }
   }

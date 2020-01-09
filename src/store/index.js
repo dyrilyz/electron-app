@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {ipcRenderer, remote} from 'electron'
+import {remote} from 'electron'
+import getters from "@/store/getters"
+import mutations from "@/store/mutations"
+import actions from "@/store/actions"
+import ipcListener from "@/store/ipcListener"
 import tableModal from "@/store/modules/tableModal"
 import {configAction} from '@/database-api'
 import {KEY_THEME} from "@/constant"
@@ -17,65 +21,6 @@ const state = {
   platform: process.platform,
 }
 
-const getters = {
-  getTheme: state => state.theme,
-  getIsMaximize: state => state.isMaximize,
-  getIsAlwaysOnTop: state => state.isAlwaysOnTop,
-  getPlatform: state => state.platform
-}
-
-const mutations = {
-  setTheme(state, theme) {
-    if (theme) {
-      state.theme = theme
-      configAction.setConfig(KEY_THEME, theme)
-    }
-  },
-  minimize() {
-    win.minimize()
-  },
-  maximize() {
-    win.maximize()
-  },
-  unmaximize() {
-    win.unmaximize()
-  },
-  close() {
-    win.close()
-  },
-  setMaximize(state, data) {
-    if (state.isMaximize !== data) {
-      state.isMaximize = data
-    }
-  },
-  alwaysOnTop(state) {
-    state.isAlwaysOnTop = !state.isAlwaysOnTop
-    win.setAlwaysOnTop(state.isAlwaysOnTop)
-  },
-  openSetting(state, url) {
-    const data = {
-      url,
-      opt: {
-        modal: true,
-        width: 600,
-        height: 650,
-        minWidth: 600,
-        minHeight: 650,
-        maxWidth: 600,
-        maxHeight: 650,
-      },
-      parentId: win.id,
-    }
-    ipcRenderer.send('open-window', data)
-  },
-}
-
-const actions = {
-  syncWindow({state}) {
-    ipcRenderer.send('notify', {eName: 'sync-store', data: {state}})
-  }
-}
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({state, getters, mutations, actions, modules})
@@ -89,12 +34,6 @@ async function init() {
 
 init()
 
-ipcRenderer.on('win-maximize', (e, data) => {
-  store.commit('setMaximize', data)
-})
-
-ipcRenderer.on('sync-store', (e, {state}) => {
-  Object.assign(store.state, state)
-})
+ipcListener(store)
 
 export default store

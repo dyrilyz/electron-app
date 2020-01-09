@@ -1,4 +1,5 @@
 import {remote} from 'electron'
+import moment from 'moment'
 
 export function urlResolver(that, route) {
   const baseUrl = location.href.replace(location.hash, '')
@@ -28,4 +29,8 @@ export function hasNotModal() {
 
 export function random(range) {
   return Math.round(Math.random() * range)
+}
+
+export function dateTime(val) {
+  return moment(val).format('YYYY-MM-DD HH:mm:ss')
 }

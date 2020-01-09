@@ -4,6 +4,7 @@ module.exports = {
     "@vue/cli-plugin-babel/preset"
   ],
   "plugins": [
+    "@babel/plugin-proposal-export-default-from",
     [
       "component",
       {
@@ -11,6 +12,5 @@ module.exports = {
         "styleLibraryName": "theme-chalk"
       }
     ],
-    "@babel/plugin-proposal-export-default-from",
   ]
 }

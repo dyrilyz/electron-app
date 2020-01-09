@@ -55,7 +55,7 @@ $themePurple_themeMark: #5a24b1;
 $themePurple_ElButtonApp_Hover: #5a24b1;
 
 @mixin theme($selector, $color, $logoColor, $splitLine, $iconColor, $iconColor_Hover, $themeMark, $ElButtonApp_Hover) {
-  .#{$selector} {
+  #{$selector} {
 
     .app-header {
       background-color: $color;
@@ -144,7 +144,7 @@ $themePurple_ElButtonApp_Hover: #5a24b1;
   }
 }
 
-@include theme('theme-red', $themeRed, $themeRed_logoColor, $themeRed_splitLine, $themeRed_iconColor, $themeRed_iconColor_Hover, $themeRed_themeMark, $themeRed_ElButtonApp_Hover);
+@include theme('.theme-red', $themeRed, $themeRed_logoColor, $themeRed_splitLine, $themeRed_iconColor, $themeRed_iconColor_Hover, $themeRed_themeMark, $themeRed_ElButtonApp_Hover);
 
 @include theme('theme-dark', $themeDark, $themeDark_logoColor, $themeDark_splitLine, $themeDark_iconColor, $themeDark_iconColor_Hover, $themeDark_themeMark, $themeDark_ElButtonApp_Hover);
 
