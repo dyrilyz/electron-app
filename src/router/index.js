@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '@/windows/Main'
 import Setting from '@/windows/Setting'
+import Modal from "@/windows/Modal"
 
 Vue.use(VueRouter)
 
@@ -45,13 +46,25 @@ const settingRouter = {
   component: Setting
 }
 
+const modalRouter = {
+  path: '/modal-win',
+  name: 'modal-win',
+  component: Modal,
+  children: [{
+    path: 'table-modal',
+    name: 'table-modal',
+    component: () => import('@/views/Modal/TableModal')
+  }]
+}
+
 const routes = [
   {
     path: '/',
     redirect: '/main',
   },
   mainRouter,
-  settingRouter
+  settingRouter,
+  modalRouter,
 ]
 
 const router = new VueRouter({routes})

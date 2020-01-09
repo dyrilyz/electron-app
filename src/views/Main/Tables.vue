@@ -1,7 +1,7 @@
 <template>
   <div class="page-container tables">
     <div class="search-wrapper">
-      <el-button size="mini" type="app" icon="el-icon-plus" @click="addModalVisible=true">添加表</el-button>
+      <el-button size="mini" type="app" icon="el-icon-plus" @click="openModal">添加表</el-button>
     </div>
 
     <dy-table :columns="columns" :data="data">
@@ -19,10 +19,16 @@
   import DyTable from "@/components/DyTable"
   import {addTable, findTables} from "@/database-api/service/tableService"
   import AddTableModal from "@/views/Main/modules/addTableModal"
+  import {urlResolver} from "@/util"
 
   export default {
     name: "Tables",
     components: {AddTableModal, DyTable},
+    computed: {
+      dataList() {
+        return ''
+      }
+    },
     data() {
       return {
         data: [
@@ -38,6 +44,11 @@
       }
     },
     methods: {
+      openModal() {
+        const url = urlResolver(this, {name: 'table-modal', query: {title: 'hello'}})
+        this.$store.dispatch('tableModal/openSettings', {url})
+        // this.windowCtrl('openSetting', url)
+      },
       async getList() {
         await findTables()
       },

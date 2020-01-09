@@ -10,7 +10,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     height: 700,
     minWidth: 1020,
     minHeight: 700,
-    frame: false,
+    frame: true,
     // transparent: true,
     show: false,
     webPreferences: {
@@ -21,6 +21,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
 
   process.platform === 'darwin' && Object.assign(conf, {titleBarStyle: 'hiddenInset'})
   opt && Object.assign(conf, opt)
+  console.log(conf)
   let win = new BrowserWindow(conf)
 
   if (isDidFinishLoadShow) {
@@ -47,7 +48,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
   // 如果是macOS，因为这里存在一个bug：
   // 当开发者工具默认打开时，-webkit-app-region: drag可能会失效。
   // issues：https://github.com/electron/electron/issues/3647
-  if (isDevelopment && !isMacOS) win.webContents.openDevTools()
+  if (isDevelopment && isMacOS) win.webContents.openDevTools()
 
   return win
 }

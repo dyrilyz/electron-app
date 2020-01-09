@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {ipcRenderer, remote} from 'electron'
+import tableModal from "@/store/modules/tableModal"
 import {configAction} from '@/database-api'
 import {KEY_THEME} from "@/constant"
 
 const win = remote.getCurrentWindow()
+const modules = {
+  tableModal,
+}
 const state = {
   theme: 'theme-red',
   winId: -1,
@@ -74,7 +78,7 @@ const actions = {
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({state, getters, mutations, actions})
+const store = new Vuex.Store({state, getters, mutations, actions, modules})
 
 async function init() {
   const themeObj = await configAction.getConfig(KEY_THEME)
