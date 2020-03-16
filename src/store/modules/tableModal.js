@@ -20,24 +20,13 @@ const mutations = {
 }
 
 const actions = {
-  openSettings(__, {url, width, height}) {
-    width = width || 600
-    height = height || 500
-    const opt = {
-      modal: true,
-      width: width,
-      minWidth: width,
-      maxWidth: width,
-      height: height,
-      minHeight: height,
-      maxHeight: height,
-    }
-    const data = {url, opt, parentId: win.id}
-    ipcRenderer.send('open-window', data)
-  },
-  async notify(__, {eName, data}) {
+  async notify(__, {eName, data, type}) {
     eName = `tableModal/${eName}`
-    await tableAction.createTable(data)
+    if (type === 'add') {
+      await tableAction.createTable(data)
+    } else if (type === 'edit') {
+      await tableAction.updateTable(data.id, data)
+    }
     ipcRenderer.send('notify', {eName, data})
     win.close()
   },

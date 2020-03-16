@@ -34,3 +34,11 @@ export function random(range) {
 export function dateTime(val) {
   return moment(val).format('YYYY-MM-DD HH:mm:ss')
 }
+
+export function date(val) {
+  return moment(val).format('YYYY-MM-DD')
+}
+
+export function time(val) {
+  return moment(val).format('HH:mm:ss')
+}

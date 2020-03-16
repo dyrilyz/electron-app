@@ -6,10 +6,10 @@ const isMacOS = process.platform === 'darwin'
 
 function createWindow(opt, isDidFinishLoadShow = true) {
   const conf = {
-    // width: 1020,
-    // height: 700,
-    width: 1980,
-    height: 1080,
+    width: 1020,
+    height: 700,
+    // width: 1980,
+    // height: 1080,
     minWidth: 1020,
     minHeight: 700,
     frame: false,
@@ -23,7 +23,6 @@ function createWindow(opt, isDidFinishLoadShow = true) {
 
   process.platform === 'darwin' && Object.assign(conf, {titleBarStyle: 'hiddenInset'})
   opt && Object.assign(conf, opt)
-  console.log(conf)
   let win = new BrowserWindow(conf)
 
   if (isDidFinishLoadShow) {
@@ -63,7 +62,12 @@ ipcMain.on('notify', (e, {eName, data}) => {
   })
 })
 
-// 打开新窗口
+/**
+ * ipcEvent: open-window 打开新窗口
+ * @data url 需要打开的页面 url
+ * @data opt 窗口选项
+ * @data parentId 如果是子窗口或模态框，则需要该参数
+ */
 ipcMain.on('open-window', (e, data) => {
   const {url, opt, parentId} = data
   if (parentId) {

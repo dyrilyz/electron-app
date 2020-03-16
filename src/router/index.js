@@ -29,7 +29,7 @@ const mainRouter = {
   }, {
     path: 'table',
     name: 'table',
-    meta: {topTitle: '设置', title: '应用配置'},
+    meta: {topTitle: '设置', title: '数据库设计'},
     redirect: {name: 'tableList'},
     component: () => import('@/components/Pages'),
     children: [{
@@ -54,6 +54,10 @@ const modalRouter = {
     path: 'table-modal',
     name: 'table-modal',
     component: () => import('@/views/Modal/TableModal')
+  }, {
+    path: 'table-field-modal',
+    name: 'table-field-modal',
+    component: () => import('@/views/Modal/FieldModal')
   }]
 }
 

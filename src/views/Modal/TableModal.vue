@@ -24,14 +24,15 @@
 
 <script>
   import BeautifulScrollbar from "@/components/BeautifulScrollbar"
-  import {copy} from "@/util"
 
   export default {
     name: "TableModal",
     components: {BeautifulScrollbar},
     data() {
       return {
+        type: '',
         form: {
+          id: '',
           tableName: '',
           tableComment: '',
         }
@@ -39,9 +40,26 @@
     },
     methods: {
       handleBtnClick(target) {
-        const data = Object.assign({createTime: new Date()}, copy(this.form))
-        this.$store.dispatch('tableModal/notify', {eName: target, data})
+        const data = {
+          tableName: this.form.tableName,
+          tableComment: this.form.tableComment,
+        }
+        if (this.type === 'add') {
+          Object.assign(data, {createTime: new Date()})
+        } else if (this.type === 'edit') {
+          Object.assign(data, {id: this.form.id})
+        }
+        this.$store.dispatch('tableModal/notify', {eName: target, data, type: this.type})
       },
+    },
+    created() {
+      if (this.$route.query.type === 'edit') {
+        const model = JSON.parse(this.$route.query.model)
+        this.type = this.$route.query.type
+        this.form.id = model.id
+        this.form.tableName = model.tableName
+        this.form.tableComment = model.tableComment
+      }
     }
   }
 </script>

@@ -10,7 +10,9 @@
         <el-button size="mini" type="app" @click="handleClick('on-confirm')">确定</el-button>
       </div>
     </div>
-    <slot name="reference" slot="reference"/>
+    <template v-slot:reference>
+      <slot name="reference"/>
+    </template>
   </el-popover>
 </template>
 

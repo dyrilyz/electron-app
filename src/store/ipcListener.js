@@ -11,7 +11,7 @@ export default function ipcListener(store) {
   })
 
   ipcRenderer.on(`tableModal/ok`, (e, data) => {
-    console.log(e, data, store)
+    console.log(data)
     store.dispatch('tableModal/getTableList')
   })
 }
