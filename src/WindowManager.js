@@ -44,9 +44,10 @@ function createWindow(opt, isDidFinishLoadShow = true) {
   // 如果是macOS，因为这里存在一个bug：
   // 当开发者工具默认打开时，-webkit-app-region: drag可能会失效。
   // issues：https://github.com/electron/electron/issues/3647
-  // if (isDevelopment) win.webContents.openDevTools()
+  if (isDevelopment) win.webContents.openDevTools()
 
   return win
+
 }
 
 // 事件中转
