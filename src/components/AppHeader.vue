@@ -2,7 +2,7 @@
   <div class="app-header">
     <div class="content-wrapper">
       <div class="logo">
-        <span class="xb">Electron App</span>
+        <span class="xb">Drog FTP</span>
       </div>
       <div class="window-ctrl">
         <div class="app-ctrl">
@@ -63,6 +63,7 @@
     },
   }
 </script>
+
 
 <style scoped lang="scss">
   @import "../assets/style/constant";

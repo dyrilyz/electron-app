@@ -2,9 +2,8 @@
   <div class="main">
     <app-header/>
     <div class="main-container">
-      这是主窗口
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 

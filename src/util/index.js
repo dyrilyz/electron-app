@@ -1,3 +1,6 @@
+import {promises as fsPromises} from 'fs'
+import path from 'path'
+// import os from 'os'
 import {remote} from 'electron'
 
 export function urlResolver(that, route) {
@@ -24,4 +27,25 @@ export function hasModal() {
 
 export function hasNotModal() {
   return !hasModal()
+}
+
+export async function getLocalDirList(targetPath) {
+  const dirTree = []
+  const rootDirs = await fsPromises.readdir(targetPath)
+  for (const name of rootDirs) {
+    let stat
+    try {
+      stat = await fsPromises.stat(path.resolve(targetPath, `./${name}`))
+    } catch {
+      console.log('error')
+      continue
+    }
+    dirTree.push({
+      name,
+      key: +new Date() + (Math.random() * 10000).toFixed(0),
+      // 0: 文件， 1: 文件夹
+      type: +stat.isDirectory()
+    })
+  }
+  return dirTree
 }
