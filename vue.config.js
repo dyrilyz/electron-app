@@ -5,10 +5,16 @@ module.exports = {
       // customFileProtocol: 'cc://./',
       // 打包配置
       builderOptions: {
-        win: {
+        productName: 'drogFTP',
+        // win: {
+        //   target: [
+        //     // 打包绿色版（免安装版）
+        //     {target: 'portable'}
+        //   ]
+        // }
+        mac: {
           target: [
-            // 打包绿色版（免安装版）
-            {target: 'portable'}
+            {target: 'dmg'}
           ]
         }
       },

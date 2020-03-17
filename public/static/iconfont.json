@@ -1,0 +1,30 @@
+{
+  "id": "1694583",
+  "name": "frog_ftp",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9252049",
+      "name": "10-青蛙",
+      "font_class": "-qingwa",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "7141703",
+      "name": "file",
+      "font_class": "file",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "5121520",
+      "name": "文件夹",
+      "font_class": "wenjianjia",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    }
+  ]
+}

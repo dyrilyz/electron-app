@@ -2,7 +2,11 @@
   <div class="app-header">
     <div class="content-wrapper">
       <div class="logo">
-        <span class="xb">Drog FTP</span>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon--qingwa"></use>
+        </svg>
+        <span class="xb" style="margin-left: 10px;">Drog FTP</span>
+        <span style="font-style: initial; font-size: 10px;letter-spacing: 0;margin-left: 10px;">免费的sftp工具</span>
       </div>
       <div class="window-ctrl">
         <div class="app-ctrl">

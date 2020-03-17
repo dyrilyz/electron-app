@@ -26,13 +26,14 @@
       <div class="local" v-loading="localLoading">
         <div class="current-local-path">当前路径：{{pathList.join('')}}</div>
         <ul class="local-file_list">
-          <li v-show="pathList.length>1">
-            <file :file-obj="{name: '返回上一级', type: 2}"
-                  :allow-upload="false"
-                  @dblclick="goToPrev"></file>
+          <li v-show="pathList.length > 1">
+            <file :file-obj="{name: '返回上一级', type: 2}" @dblclick="goToPrev"></file>
           </li>
           <li v-for="(item,index) in currentDir" :key="item.key">
-            <file :file-obj="item" @dblclick="intoDir(index)"/>
+            <file :file-obj="item"
+                  :func-group="localFileGroup"
+                  @dblclick="intoDir(index)"
+                  @upload-handle="uploadMethod(item)"/>
           </li>
         </ul>
       </div>
@@ -42,15 +43,17 @@
         <div class="current-local-path">当前路径：{{remotePathList.join('')}}</div>
         <ul class="local-file_list">
           <li v-show="remotePathList.length>1">
-            <file :file-obj="{name: '返回上一级', type: 2}"
-                  :allow-upload="false"
-                  @dblclick="goToRemotePrev"></file>
+            <file :file-obj="{name: '返回上一级', type: 2}" @dblclick="goToRemotePrev"></file>
           </li>
           <li v-for="(item,index) in remoteCurrentDir" :key="item.key">
-            <file :file-obj="item" @dblclick="intoRemoteDir(index)"/>
+            <file :file-obj="item"
+                  :func-group="remoteFileGroup"
+                  @dblclick="intoRemoteDir(index)"
+                  @download-handle="downloadMethod(item)"/>
           </li>
         </ul>
       </div>
+
     </div>
   </div>
 </template>
@@ -67,19 +70,62 @@
       return {
         localLoading: false,
         remoteLoading: false,
+        localFileGroup: [{
+          text: '上传',
+          attr: {type: 'primary', size: 'mini', plain: true,},
+          eventName: 'upload-handle',
+        }],
+        remoteFileGroup: [{
+          text: '下载',
+          attr: {type: 'danger', size: 'mini', plain: true,},
+          eventName: 'download-handle',
+        }],
         currentDir: [],
-        pathList: ['/'],
+        pathList: ['/',],
         remoteCurrentDir: [],
         remotePathList: ['/'],
-        serverConfig: {
-        },
+        serverConfig: {},
       }
     },
     components: {File},
-    mounted() {
+    created() {
       this.getRootDir()
     },
     methods: {
+      async downloadMethod({name}) {
+        let to = this.pathList.join('') + name
+        let from = this.remotePathList.join('') + name
+        console.log('downloadMethod', to, from)
+        try {
+          await client.download(from, to)
+          await this.getRootDir()
+          this.$message({
+            type: 'success',
+            offset: 80,
+            message: '下载成功！'
+          })
+        } catch (e) {
+          console.log(e)
+        }
+      },
+
+      async uploadMethod({name}) {
+        let to = this.remotePathList.join('') + name
+        let from = this.pathList.join('') + name
+        console.log('uploadMethod', to, from)
+        try {
+          await client.upload(from, to)
+          await this.getRemoteDir()
+          this.$message({
+            type: 'success',
+            offset: 80,
+            message: '下载成功！'
+          })
+        } catch (e) {
+          console.log(e)
+        }
+      },
+
       // 获取本地目录内容
       async getRootDir() {
         this.localLoading = true
@@ -99,6 +145,21 @@
           })
         }
         this.localLoading = false
+      },
+
+      // 进入本地目录
+      intoDir(i) {
+        const file = this.currentDir[i]
+        if (file.type === 1) {
+          this.pathList.push(file.name + '/')
+          this.getRootDir()
+        }
+      },
+
+      // 本地目录返回上一级
+      goToPrev() {
+        this.pathList.pop()
+        this.getRootDir()
       },
 
       // 获取远程目录内容
@@ -122,22 +183,7 @@
         this.remoteLoading = false
       },
 
-      // 进入本地目录
-      intoDir(i) {
-        const file = this.currentDir[i]
-        if (file.type === 1) {
-          this.pathList.push(file.name + '/')
-          this.getRootDir()
-        }
-      },
-
-      // 本地目录返回上一级
-      goToPrev() {
-        this.pathList.pop()
-        this.getRootDir()
-      },
-
-      // 进入本地目录
+      // 进入远程目录
       intoRemoteDir(i) {
         const file = this.remoteCurrentDir[i]
         if (file.type === 1) {
@@ -146,7 +192,7 @@
         }
       },
 
-      // 本地目录返回上一级
+      // 远程目录返回上一级
       goToRemotePrev() {
         this.remotePathList.pop()
         this.getRemoteDir()
@@ -154,10 +200,15 @@
 
       // 连接 sftp
       async connect() {
+        this.remoteLoading = true
         this.serverConfig.port *= 1
         client = new SFTPUtil(this.serverConfig)
-        await client.connect()
-        this.getRemoteDir()
+        try {
+          await client.connect()
+          this.getRemoteDir()
+        } catch {
+          this.remoteLoading = false
+        }
       },
 
       // 关闭 sftp
@@ -165,14 +216,14 @@
         if (client) {
           await client.end()
           client = null
+          this.$message({
+            type: 'primary',
+            offset: 80,
+            message: '连接已断开！'
+          })
         }
         this.remoteCurrentDir.splice(0, this.remoteCurrentDir.length)
         this.remotePathList.splice(0, this.remotePathList.length, '/')
-        this.$message({
-          type: 'primary',
-          offset: 80,
-          message: '连接已断开！'
-        })
         this.remoteLoading = false
       }
     }

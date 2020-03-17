@@ -1,14 +1,15 @@
 <template>
-  <div
-      class="file"
-      v-on="$listeners"
-      :class="{'active':fileObj.active}">
+  <div class="file" v-on="$listeners" :class="{'active':fileObj.active}">
     <div>
       <i class="iconfont " :class="[fileIcon]"/>
       <span class="file-name">{{fileObj.name}}</span>
     </div>
     <div class="fun-wrapper">
-      <el-button v-show="allowUpload" type="primary" size="mini" plain>上传</el-button>
+      <el-button v-for="(btn,index) in funcGroup"
+                 v-bind="btn.attr"
+                 @click="funClick($event, btn.eventName)"
+                 :key="index">{{btn.text}}
+      </el-button>
     </div>
   </div>
 </template>
@@ -21,6 +22,9 @@
       allowUpload: {
         type: Boolean,
         default: true
+      },
+      funcGroup: {
+        type: Array
       }
     },
     computed: {
@@ -45,18 +49,32 @@
     },
     mounted() {
     },
-    methods: {},
+    methods: {
+      funClick(e, eventName) {
+        this.$emit(eventName, e)
+      }
+    },
   }
 </script>
 
 <style scoped lang="scss">
+  $animTime: .2s;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   .file {
-    /*display: inline-block;*/
     font-size: 16px;
     padding: 0 10px;
     cursor: pointer;
     border-radius: 3px;
-    transition: all .2s;
+    transition: all $animTime;
     user-select: none;
     margin-bottom: 1px;
     display: flex;
@@ -80,6 +98,7 @@
       background-color: rgba(148, 213, 233, 0.28);
 
       .fun-wrapper {
+        animation: fade-in $animTime;
         display: block;
       }
     }
