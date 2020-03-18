@@ -70,17 +70,14 @@
   }
 
   .file {
-    font-size: 16px;
-    padding: 0 10px;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: all $animTime;
+    font-size: 12px;
+    padding: 0 10px 0 28px;
+    // transition: all $animTime;
     user-select: none;
-    margin-bottom: 1px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 40px;
+    height: 26px;
 
     .fun-wrapper {
       display: none;
@@ -95,7 +92,8 @@
     }
 
     &:hover {
-      background-color: rgba(148, 213, 233, 0.28);
+      background-color: rgb(0, 121, 233);
+      color: #fff;
 
       .fun-wrapper {
         animation: fade-in $animTime;

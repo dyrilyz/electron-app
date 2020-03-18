@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="connect-form">
-      <el-form inline>
+      <el-form class="form" inline>
         <el-form-item>
           <el-input size="mini" placeholder="主机" v-model="serverConfig.host"/>
         </el-form-item>
@@ -15,7 +15,7 @@
           <el-input size="mini" placeholder="密码" v-model="serverConfig.password" type="password"/>
         </el-form-item>
         <el-form-item>
-          <el-button size="mini" type="primary" @click="connect">连接</el-button>
+          <el-button size="mini" type="app" @click="connect">连接</el-button>
           <el-button size="mini" type="danger" @click="disconnect">断开</el-button>
         </el-form-item>
       </el-form>
@@ -24,32 +24,26 @@
 
       <!-- 本地目录 Remote Dir-->
       <div class="local" v-loading="localLoading">
-        <div class="current-local-path">当前路径：{{pathList.join('')}}</div>
-        <ul class="local-file_list">
+        <div class="current-path">当前路径：{{pathList.join('')}}</div>
+        <ul class="file_list">
           <li v-show="pathList.length > 1">
             <file :file-obj="{name: '返回上一级', type: 2}" @dblclick="goToPrev"></file>
           </li>
           <li v-for="(item,index) in currentDir" :key="item.key">
-            <file :file-obj="item"
-                  :func-group="localFileGroup"
-                  @dblclick="intoDir(index)"
-                  @upload-handle="uploadMethod(item)"/>
+            <file :file-obj="item" @click.right="popupMenu(0, index)" @dblclick="intoDir(index)"/>
           </li>
         </ul>
       </div>
 
       <!-- 远程目录 Remote Dir-->
       <div class="remote" v-loading="remoteLoading">
-        <div class="current-local-path">当前路径：{{remotePathList.join('')}}</div>
-        <ul class="local-file_list">
+        <div class="current-path">当前路径：{{remotePathList.join('')}}</div>
+        <ul class="file_list">
           <li v-show="remotePathList.length>1">
             <file :file-obj="{name: '返回上一级', type: 2}" @dblclick="goToRemotePrev"></file>
           </li>
           <li v-for="(item,index) in remoteCurrentDir" :key="item.key">
-            <file :file-obj="item"
-                  :func-group="remoteFileGroup"
-                  @dblclick="intoRemoteDir(index)"
-                  @download-handle="downloadMethod(item)"/>
+            <file :file-obj="item" @click.right="popupMenu(1, index)" @dblclick="intoRemoteDir(index)"/>
           </li>
         </ul>
       </div>
@@ -59,10 +53,18 @@
 </template>
 
 <script>
-  import {getLocalDirList, SFTPUtil} from "@/util"
+  import {getLocalDirList} from "@/util"
+  import SFTPUtil from "@/util/SFTPUtil"
   import File from "@/components/file"
+  import {remote} from 'electron'
+  import {isWin} from "@/util/_base_fun"
 
   let client = null
+  const {Menu, MenuItem} = remote
+
+  function createMenuList(arr) {
+    return arr.map(opt => new MenuItem(opt))
+  }
 
   export default {
     name: 'home',
@@ -70,32 +72,68 @@
       return {
         localLoading: false,
         remoteLoading: false,
-        localFileGroup: [{
-          text: '上传',
-          attr: {type: 'primary', size: 'mini', plain: true,},
-          eventName: 'upload-handle',
-        }],
-        remoteFileGroup: [{
-          text: '下载',
-          attr: {type: 'danger', size: 'mini', plain: true,},
-          eventName: 'download-handle',
-        }],
         currentDir: [],
         pathList: ['/',],
         remoteCurrentDir: [],
         remotePathList: ['/'],
-        serverConfig: {},
+        serverConfig: {
+          host: '192.168.31.200',
+          port: 22,
+          username: 'pi',
+          password: 'zhangxin123',
+        },
+        remoteMenu: new Menu(),
+        local: {
+          currentFileName: '',
+          menu: new Menu(),
+        },
+        remote: {
+          currentFileName: '',
+          menu: new Menu(),
+        }
       }
     },
     components: {File},
     created() {
+      isWin && (this.pathList[0] = '')
       this.getRootDir()
+      const _this = this
+
+      // 初始化本地文件列表的弹出菜单
+      const localMenuItem = createMenuList([
+        {label: '上传', click: () => _this.uploadMethod()},
+        // {type: 'separator'},
+        // {label: '刷新文件列表'},
+      ])
+      localMenuItem.forEach(item => this.local.menu.append(item))
+
+      // 初始化远程文件列表的弹出菜单
+      const remoteMenuItem = createMenuList([
+        {label: '下载', click: () => _this.downloadMethod()},
+        // {type: 'separator'},
+        // {label: '刷新文件列表'},
+      ])
+      remoteMenuItem.forEach(item => this.remote.menu.append(item))
     },
     methods: {
-      async downloadMethod({name}) {
-        let to = this.pathList.join('') + name
-        let from = this.remotePathList.join('') + name
-        console.log('downloadMethod', to, from)
+      popupMenu(type, index) {
+        if (type === 0) {
+          // 本地菜单弹出
+          this.local.currentFileName = this.currentDir[index].name
+          if (this.currentDir[index].type !== 0) return
+          this.local.menu.popup()
+        } else if (type === 1) {
+          // 远程菜单弹出
+          this.remote.currentFileName = this.remoteCurrentDir[index].name
+          if (this.remoteCurrentDir[index].type !== 0) return
+          this.remote.menu.popup()
+        }
+      },
+
+      // 下载文件
+      async downloadMethod() {
+        let to = this.pathList.join('') + this.remote.currentFileName
+        let from = this.remotePathList.join('') + this.remote.currentFileName
         try {
           await client.download(from, to)
           await this.getRootDir()
@@ -107,23 +145,25 @@
         } catch (e) {
           console.log(e)
         }
+        this.remote.currentFileName
       },
 
-      async uploadMethod({name}) {
-        let to = this.remotePathList.join('') + name
-        let from = this.pathList.join('') + name
-        console.log('uploadMethod', to, from)
+      // 上传文件
+      async uploadMethod() {
+        let to = this.remotePathList.join('') + this.local.currentFileName
+        let from = this.pathList.join('') + this.local.currentFileName
         try {
           await client.upload(from, to)
           await this.getRemoteDir()
           this.$message({
             type: 'success',
             offset: 80,
-            message: '下载成功！'
+            message: '上传成功！'
           })
         } catch (e) {
           console.log(e)
         }
+        this.local.currentFileName = ''
       },
 
       // 获取本地目录内容
@@ -230,12 +270,20 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .home {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    .form {
+      .el-input input {
+        line-height: 24px;
+        height: 24px;
+        border-radius: 0;
+      }
+    }
 
     .connect-form {
       width: 100%;
@@ -256,13 +304,19 @@
       flex: 1;
       height: 100%;
 
-      &-file_list {
+      .file_list {
         list-style: none;
         padding: 0;
         margin: 0;
         flex: 1;
         overflow-x: auto;
         height: 100%;
+
+        li {
+          &:nth-child(2n) {
+            background-color: #ededed;
+          }
+        }
       }
     }
 
@@ -270,7 +324,7 @@
       border-right: 1px solid #ccc;
     }
 
-    .current-local-path {
+    .current-path {
       padding: 3px 10px;
       background-color: #fff;
       box-shadow: 0 3px 3px #ccc;
