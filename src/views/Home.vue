@@ -77,10 +77,6 @@
         remoteCurrentDir: [],
         remotePathList: ['/'],
         serverConfig: {
-          host: '192.168.31.200',
-          port: 22,
-          username: 'pi',
-          password: 'zhangxin123',
         },
         remoteMenu: new Menu(),
         local: {
