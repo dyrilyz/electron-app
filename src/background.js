@@ -36,11 +36,11 @@ app.on('activate', () => {
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     /* vue-devtools */
-    try {
-      await installVueDevtools()
-    } catch (e) {
-      console.error('Vue Devtools failed to install:', e.toString())
-    }
+    // try {
+    //   await installVueDevtools()
+    // } catch (e) {
+    //   console.error('Vue Devtools failed to install:', e.toString())
+    // }
     /*electron 6.0以下或win10黑暗模式下不支持vue-devtools，请注释该代码片段*/
   }
   createMainWindow()

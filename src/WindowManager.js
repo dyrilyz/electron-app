@@ -1,4 +1,4 @@
-import {BrowserWindow, ipcMain} from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 
 // const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -14,7 +14,7 @@ function createWindow(opt, isDidFinishLoadShow = true) {
     show: false,
     webPreferences: {
       nodeIntegration: true
-    },
+    }
   }
 
   opt && Object.assign(conf, opt)
@@ -45,12 +45,14 @@ function createWindow(opt, isDidFinishLoadShow = true) {
   // 当开发者工具默认打开时，-webkit-app-region: drag可能会失效。
   // issues：https://github.com/electron/electron/issues/3647
   // if (isDevelopment) win.webContents.openDevTools()
+  // win.webContents.openDevTools()
+
 
   return win
 }
 
 // 事件中转
-ipcMain.on('notify', (e, {eName, data}) => {
+ipcMain.on('notify', (e, { eName, data }) => {
   const arr = BrowserWindow.getAllWindows().filter(win => win.webContents !== e.sender)
   arr.forEach(win => {
     win.webContents.send(eName, data)
@@ -59,13 +61,13 @@ ipcMain.on('notify', (e, {eName, data}) => {
 
 // 打开新窗口
 ipcMain.on('open-window', (e, data) => {
-  const {url, opt, parentId} = data
+  const { url, opt, parentId } = data
   if (parentId) {
     const parent = BrowserWindow.fromId(parentId)
-    Object.assign(opt, {parent})
+    Object.assign(opt, { parent })
   }
   const win = createWindow(opt)
   win.loadURL(url)
 })
 
-export default {createWindow}
+export default { createWindow }

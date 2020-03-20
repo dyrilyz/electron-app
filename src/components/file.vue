@@ -1,6 +1,6 @@
 <template>
   <div class="file" v-on="$listeners" :class="{'active':fileObj.active}">
-    <div>
+    <div class="icon_and_name">
       <i class="iconfont " :class="[fileIcon]"/>
       <span class="file-name">{{fileObj.name}}</span>
     </div>
@@ -79,6 +79,11 @@
     align-items: center;
     height: 26px;
 
+    .icon_and_name {
+      display: flex;
+      align-items: center;
+    }
+
     .fun-wrapper {
       display: none;
     }
@@ -92,7 +97,7 @@
     }
 
     &:hover {
-      background-color: rgb(0, 121, 233);
+      background-color: #2364db;
       color: #fff;
 
       .fun-wrapper {
