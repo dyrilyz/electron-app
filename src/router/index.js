@@ -11,7 +11,13 @@ const routes = [{
 }, {
   path: '/main',
   name: 'main',
-  component: Main
+  component: Main,
+  redirect: '/home',
+  children: [{
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/Home')
+  }]
 }, {
   path: '/setting',
   name: 'setting',
