@@ -19,5 +19,8 @@
 
 <style lang="scss" scoped>
   .main {
+    .main-container {
+      overflow: auto;
+    }
   }
 </style>

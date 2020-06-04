@@ -23,16 +23,43 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-router": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-component": "^1.1.1",
     "electron": "^7.1.7",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
     "sass": "^1.24.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-electron-builder": "^1.4.4",
     "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.10"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-console": 0,
+      "semi": [
+        "error",
+        "never"
+      ],
+      "no-debugger": 0
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "globals": {
+      "__static": true
+    }
   },
   "browserslist": [
     "> 1%",
