@@ -1,7 +1,8 @@
 <template>
   <div class="file" v-on="$listeners" :class="{'active':fileObj.active}">
     <div class="icon_and_name">
-      <i class="iconfont " :class="[fileIcon]"/>
+      <img :src="fileObj.icon" alt="" v-if="fileObj.icon" style="height: 20px">
+      <i class="iconfont " :class="[fileIcon]" v-else/>
       <span class="file-name">{{fileObj.name}}</span>
     </div>
     <div class="fun-wrapper">

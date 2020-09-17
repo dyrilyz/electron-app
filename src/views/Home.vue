@@ -60,7 +60,7 @@
   import {isWin} from "@/util/_base_fun"
 
   let client = null
-  const {Menu, MenuItem} = remote
+  const {Menu, MenuItem, app} = remote
 
   function createMenuList(arr) {
     return arr.map(opt => new MenuItem(opt))
@@ -76,8 +76,7 @@
         pathList: ['/',],
         remoteCurrentDir: [],
         remotePathList: ['/'],
-        serverConfig: {
-        },
+        serverConfig: {},
         remoteMenu: new Menu(),
         local: {
           currentFileName: '',
@@ -171,7 +170,14 @@
         }
         try {
           const dirs = await getLocalDirList(filePath)
-          this.currentDir.splice(0, this.currentDir.length, ...dirs.map(item => ({...item, active: false})))
+          const filePathPrefix = this.pathList.join('')
+          for (const dir of dirs) {
+            console.log(filePathPrefix + dir.name)
+            const nativeImage = await app.getFileIcon(filePathPrefix + dir.name)
+            Object.assign(dir, {icon: nativeImage.toDataURL()})
+          }
+          this.currentDir = dirs.map(item => ({...item, active: false}))
+          console.log(this.currentDir)
         } catch (e) {
           this.pathList.pop()
           this.$message({
@@ -309,9 +315,9 @@
         height: 100%;
 
         li {
-          &:nth-child(2n) {
-            background-color: #ededed;
-          }
+          /*&:nth-child(2n) {*/
+          /*  background-color: #ededed;*/
+          /*}*/
         }
       }
     }
